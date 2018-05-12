@@ -1,0 +1,185 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+function GetLatestPricesEx() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/getlatestpricesex";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbols=DEDR.L;";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("symbol").innerHTML = data.data.prices.values[0].slice(0, 1);
+document.getElementById("price").innerHTML = data.data.prices.values[0].slice(2, 3); 
+document.getElementById("change").innerHTML = data.data.prices.values[0].slice(3, 4); 
+document.getElementById("percentChange").innerHTML = data.data.prices.values[0].slice(4, 5); 
+document.getElementById("volume").innerHTML = data.data.prices.values[0].slice(7, 8); 
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}
+    
+function GetStocksSnapshot() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/GetStocksSnapshot";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbols=DEDR.L";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("52WeekHigh").innerHTML = data.data.values[0].slice(16, 17);
+document.getElementById("52WeekLow").innerHTML = data.data.values[0].slice(18, 19); 
+document.getElementById("dateSnap").innerHTML = data.data.values[0].slice(7, 8);
+document.getElementById("dayhigh").innerHTML = data.data.values[0].slice(9, 10);
+document.getElementById("daylow").innerHTML = data.data.values[0].slice(10, 11);
+document.getElementById("todaysopen").innerHTML = data.data.values[0].slice(8, 9);
+document.getElementById("previousclose").innerHTML = data.data.values[0].slice(12, 13);
+
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}
+    function GetStocksSnapshotWeekly() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/GetStocksSnapshot";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbols=DEDR.L";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("w_todaysopen").innerHTML = data.data.values[0].slice(8, 9);
+document.getElementById("w_close").innerHTML = data.data.values[0].slice(11, 12);
+document.getElementById("w_change").innerHTML = data.data.values[0].slice(14, 15);
+document.getElementById("w_percentChange").innerHTML = data.data.values[0].slice(15, 16);            
+document.getElementById("w_dayhigh").innerHTML = data.data.values[0].slice(9, 10);
+document.getElementById("w_daylow").innerHTML = data.data.values[0].slice(10, 11);
+document.getElementById("w_volume").innerHTML = data.data.values[0].slice(13, 14);
+document.getElementById("dateJS").innerHTML = data.data.values[0].slice(7, 8);
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}
+function GetIntradayPricesDAY_01() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/GetIntradayPricesEx";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbol=DEDR.L&includeColumnNames=false&from=2017-12-31&to=2017-12-31";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("INopen").innerHTML = data.data.open;
+document.getElementById("INclose").innerHTML = data.data.close;
+document.getElementById("INhigh").innerHTML = data.data.high;
+document.getElementById("INlow").innerHTML = data.data.low;
+document.getElementById("INvolume").innerHTML = data.data.volume;
+document.getElementById("INpreviousClose").innerHTML = data.data.previousClose;    
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}
+function GetIntradayPricesDAY_02() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/GetIntradayPricesEx";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbol=DEDR.L&includeColumnNames=false&from=2018-01-01&to=2018-01-01";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("INopen2").innerHTML = data.data.open;
+document.getElementById("INclose2").innerHTML = data.data.close;
+document.getElementById("INhigh2").innerHTML = data.data.high;
+document.getElementById("INlow2").innerHTML = data.data.low;
+document.getElementById("INvolume2").innerHTML = data.data.volume;
+document.getElementById("INpreviousClose2").innerHTML = data.data.previousClose;    
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}   
+    
+</script>
+
+ 
+
+<body style="padding:20px; font-family: Arial;" onload="GetLatestPricesEx(); GetStocksSnapshot(); GetIntradayPricesDAY_01(); GetIntradayPricesDAY_02();">
+
+ <h2>Daily Summary Of Stock Price</h2>
+
+    <span style="font-weight: bold; padding-right:5px;">Symbol:</span><label id="symbol"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Last Price:</span><label id="price"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Change:</span><label id="change"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Change%:</span><label id="percentChange"></label>%<br>
+    <span style="font-weight: bold; padding-right:5px;">Volume:</span><label id="volume"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">52 Week High:</span><label id="52WeekHigh"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">52 Week Low:</span><label id="52WeekLow"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Day High:</span><label id="dayhigh"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Day Low:</span><label id="daylow"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Today's Open:</span><label id="todaysopen"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Previous Close:</span><label id="previousclose"></label><br>
+
+    <br><br>
+    <span style="font-weight: bold; padding-right:5px;">Snap By Date:</span><label id="dateSnap"></label><br>
+
+    
+    
+ <h2>GetIntradayPricesDAY_01 (31.12.17)</h2>
+
+    <span style="font-weight: bold; padding-right:5px;">Opening Price:</span><label id="INopen"></label><br>   
+    <span style="font-weight: bold; padding-right:5px;">Last Trade:</span><label id="INclose"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Previous Close:</span><label id="INpreviousClose"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Day´s High:</span><label id="INhigh"></label><br>   
+    <span style="font-weight: bold; padding-right:5px;">Day´s Low:</span><label id="INlow"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Volume:</span><label id="INvolume"></label><br>
+    <br>
+<br>
+ <h2>GetIntradayPricesDAY_02 (1.1.18)</h2>
+
+    <span style="font-weight: bold; padding-right:5px;">Opening Price:</span><label id="INopen2"></label><br>   
+    <span style="font-weight: bold; padding-right:5px;">Last Trade:</span><label id="INclose2"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Previous Close:</span><label id="INpreviousClose2"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Day´s High:</span><label id="INhigh2"></label><br>   
+    <span style="font-weight: bold; padding-right:5px;">Day´s Low:</span><label id="INlow2"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Volume:</span><label id="INvolume2"></label><br>
+    <br>
+<br>
+
+</body>

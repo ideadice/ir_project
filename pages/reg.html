@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html ng-app="myApp">
+
+<head>
+<meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<meta name="description" content="registration">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+<!-- jQuery library -->
+<script type="text/javascript" src="../lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../lib/jquery-2.1.4.js"></script>
+
+<!-- Bootstrap JS -->
+<script type="text/javascript" src="../lib/bootstrap.min.js"></script>
+
+<!-- AngularJs -->
+<script type="text/javascript" src="../lib/angular.min.js"></script>
+    
+<!-- FontAwesome -->   
+<script src="https://use.fontawesome.com/700d9877de.js"></script>
+    
+<!-- source files -->
+<script type="text/javascript" src="../src/app.js"></script>
+
+<!-- CSS Stylesheets -->
+<link rel="stylesheet" type="text/css" href="../css/project.css" />
+<link rel="stylesheet" type="text/css" href="../css/awesome-bootstrap-checkbox.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+        .dice-main{
+            width: 100%;
+            max-width: 100%;
+            border:4px solid f4f4f4; 
+            padding:0px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .dice-main h2{
+            padding-left:10px;
+            font-size:18px;
+            padding-top:5px;
+            padding-bottom:5px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .form-group{
+            width:100%;  
+            margin-bottom: 5px!important;
+        }
+        .form-horizontal .form-group {
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+        }
+        .dice-checkbox-parent{
+            padding-left:30px;   
+        }
+        .dice-checkbox-child{
+            padding-left:50px;          
+        }
+        .dice-checkbox{
+            padding-left:30px;            
+        }
+        .dice-control{
+            margin-top:0px; 
+            padding-left:30px;    
+        }
+        .dice-control-inside{
+            padding-left:30px;    
+        }
+
+        .col-sm-2 {
+            width: 120px;!important;
+        }
+        .col-lg-2 {
+            width: 200px;
+        }
+        .col-sm-4 {
+            width:220px;
+        }
+        .col-sm-10{
+            width:400px;
+        }
+        .dice-btn{
+            margin-left:10px;
+            margin-top:20px;
+            padding:8px 30px 8px 30px;
+            font-size:16px;
+            font-weight: bold;
+            color:#000;
+        }
+        .input-group{
+            width: 400px; 
+            margin-left: 10px; !important; 
+        }
+        .dice-required-area{
+          margin-left: 10px; !important;   
+        }
+        .checkbox label, .radio label {
+            padding-left: 5px!important;
+             outline:0!important;
+        }
+        *:focus {
+            outline: none!important;
+        }
+        .dice-percent-box{
+         margin-left:10px; 
+            width: 150px!important;  
+        }
+        .dice-percent-text{
+         margin-left:10px;
+            margin-top:5px;   
+        }
+        .dice-checkbox-second{
+         margin-left:30px;   
+        }
+@media (max-width: 768px) {
+        .dice-main{
+            padding:20px;
+        }
+        .dice-main h2{
+            padding-left:0;
+            text-align:center;
+            font-size:20px;
+        }
+            .form-group{
+               width: 100% !important; 
+        }
+        .col-sm-10{
+            width:100%;
+        }
+        .dice-checkbox-parent{
+            padding-left:20px;           
+        }
+        .dice-checkbox-child{
+            padding-left:30px; 
+        }
+        .dice-checkbox{
+            padding-left:20px;          
+        }
+        .col-lg-2 {
+            width: 30%;
+        }
+        .dice-btn{
+            margin-top:20px;;
+            text-align:center; 
+            padding:10px 20px 10px 20px;
+            font-size:16px;
+            font-weight: bold;             
+        }
+        
+      
+        #inp1.ng-invalid-dirty{
+       background:red;
+        }
+        .input-group{
+            width: 100%; 
+            margin-left: 5px; !important;
+            margin-right: 5px; !important;  
+        }
+        .dice-required-area{
+            margin-left: 5px; !important; 
+        }        
+      
+        
+}
+    </style>
+<title>Registration Page</title>
+
+
+</head>
+
+
+<body onload="loadFunction()" >
+
+<div class="covercls" ng-controller="registration">
+
+<div class="container dice-main">
+ <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i>   Fill Details</h2>
+
+    <form class="form-horizontal" name="myForm"   action="registrationInsert.php" method="post">
+<!--Email-->
+        <div class="input-group margin-bottom-sm">
+          <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+             <input type="email" class="form-control" id="email"  onkeyup="showHint(this.value)" placeholder="Enter email*" name="email" ng-model="email" required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" style="z-index: 1000;margin-right:4%;color:#f39c12;" ng-show="myForm.email.$dirty && myForm.email.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" style="z-index: 1000;margin-right:4%;color:green;" ng-show="myForm.email.$dirty &&  myForm.email.$valid"></span>
+        </div>
+        <div class="dice-required-area">
+            <p id="txtHint" style="color:red"></p>
+            <p id="requiredName"  ng-show="myForm.email.$dirty && myForm.email.$invalid" style="color:#f39c12" >Invalid Email Format</p>
+            <p id="requiredName"  ng-show="!myForm.email.$dirty && myForm.email.$touched" style="color:red" >Email is required.</p>      
+        </div>
+        
+<!--First Name-->     
+        <div class="input-group margin-bottom-sm">
+          <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+        <input type="text" class="form-control" id="inp1" placeholder="Enter First Name*"  name="inp1" ng-model="inp1"  ng-pattern="/^[a-zA-Z]+$/"; required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" style="margin-right:4%;color:#f39c12;" ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" style="margin-right:4%;color:green;" ng-show="myForm.inp1.$dirty &&  myForm.inp1.$valid"></span>
+               <!--<h1>{{myForm.vld.$valid}}</h1>-->
+        </div>
+        <div class="dice-required-area">
+                <p></p>
+                <p id="requiredName"  ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid" style="color:#f39c12" >First Name must be only letters</p>
+                <p id="requiredName"  ng-show="!myForm.inp1.$dirty && myForm.inp1.$touched" style="color:red" >First Name is required.</p>    
+        </div>    
+        
+<!--Last Name-->     
+        <div class="input-group margin-bottom-sm">
+          <span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
+        <input type="text" class="form-control" id="pName2" placeholder="Enter Last Name*" name="pName2" ng-model="pName2"    ng-pattern="/^[a-zA-Z]+$/"; required  > 
+        <span class="glyphicon glyphicon-remove form-control-feedback" style="margin-right:4%;color:#f39c12;" ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid"></span>
+        <span class="glyphicon glyphicon-ok form-control-feedback" style="margin-right:4%;color:green;" ng-show="myForm.pName2.$dirty && myForm.pName2.$valid" ></span>
+        </div>
+        <div class="dice-required-area">
+                <p></p>
+                <p id="requiredName"  ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid" style="color:#f39c12" >Last Name must be only letters</p>
+                <p id="requiredName"  ng-show="!myForm.pName2.$dirty && myForm.pName2.$touched" style="color:red" >Last Name is required.</p>   
+        </div>          
+
+<!--Company-->     
+        <div class="input-group margin-bottom-sm">
+          <span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
+   <input type="text" class="form-control" id="cName" placeholder="Enter Company*" name="cName" ng-model="cName">
+        <span class="glyphicon glyphicon-remove form-control-feedback" style="margin-right:4%;color:#f39c12;" ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid"></span>
+        <span class="glyphicon glyphicon-ok form-control-feedback" style="margin-right:4%;color:green;" ng-show="myForm.pName2.$dirty && myForm.pName2.$valid" ></span>
+        </div>
+        <div class="dice-required-area">
+                <p></p>
+        <p id="requiredName"  ng-show="!myForm.cName.$dirty && myForm.cName.$touched" style="color:red" >Company is required.</p>    
+        </div>  
+
+<!--Country-->     
+        <div class="input-group margin-bottom-sm">
+          <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+              <select class="form-control" id="sel1" name="sel1" ></select> 
+        </div>
+        <div class="dice-required-area">
+                <p></p>   
+        </div>  
+   
+   
+       <h2><i class="fa fa-line-chart" aria-hidden="true"></i>   Stock Information</h2>
+
+<!--Daily Summary Of Stock Price-->
+      <div class="checkbox checkbox-primary dice-checkbox">
+        <input type="checkbox" value="" id="dailySummaryStock" name="dailySummaryStock">
+        <label for="dailySummaryStock">
+            Daily Summary Of Stock Price
+        </label>
+      </div>
+        
+<!--Weekly Summary Of Stock Price-->
+      <div class="checkbox checkbox-primary dice-checkbox">
+        <input type="checkbox" value="" id="weeklySummaryStock" name="weeklySummaryStock">
+        <label for="weeklySummaryStock">
+            Weekly Summary Of Stock Price
+        </label>
+      </div>
+
+<!--Stock Threshold Alert-->
+      <div class="checkbox checkbox-primary dice-checkbox">
+        <input type="checkbox" value=""  id="stockThresholdAlert"  name="stockThresholdAlert" ng-model="stockThresholdAlert">
+        <label for="stockThresholdAlert">
+            Stock Threshold Alert
+        </label>
+      </div>
+                                            
+<!--Above And Below Control-->                                                
+  <label class="control-label dice-control"><i class="fa fa-percent" aria-hidden="true"></i>  Above And Below:</label>
+   	<div class="row" >
+  <div class="col-lg-10 dice-control-inside">
+    <div class="input-group dice-percent-box">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="btn-plus"  onclick="minusFunction()"  ng-disabled="!stockThresholdAlert" ><span class="glyphicon glyphicon-minus" ></span></button>
+      </span>
+      <input type="text" class="form-control" name="percent" id="percent" value="%" style="text-align: center;" ng-disabled="!stockThresholdAlert">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="btn-minus"  onclick="plusFunction()" ng-disabled="!stockThresholdAlert"><span class="glyphicon glyphicon-plus" ></span></button>
+      </span>
+    </div>
+    <p class="dice-percent-text" id="requiredName"  ng-show="stockThresholdAlert" style="color:red;" >Enter Percent</p> 
+  </div>
+</div> 
+   
+<!-- Start New Fill -->
+    <h2><i class="fa fa-rss" aria-hidden="true"></i>   News</h2>
+        
+<!--All News-->
+      <div class="checkbox checkbox-primary dice-checkbox">
+          <input type="checkbox" value="" id="allCheck"  ng-model="all" >
+        <label for="allCheck">
+            All News
+        </label>
+      </div>
+
+<!--Immediate Reports-->
+      <div class="checkbox checkbox-primary dice-checkbox-second">
+          <input type="checkbox" value="" id="immediateCheck" name="immediateCheck" ng-checked="all">
+        <label for="immediateCheck">
+            Immediate Reports
+        </label>
+      </div>
+
+<!--News-->
+      <div class="checkbox checkbox-primary dice-checkbox-second">
+          <input type="checkbox" value="" id="newsCheck" name="newsCheck" ng-checked="all">
+        <label for="newsCheck">
+            News
+        </label>
+      </div>
+    
+<!--Financial Reports-->
+      <div class="checkbox checkbox-primary dice-checkbox-second">
+          <input type="checkbox" value="" id="financialCheck" name="financialCheck" ng-checked="all">
+        <label for="financialCheck">
+            Financial Reports
+        </label>
+      </div>
+ 
+<!--Presentation-->
+      <div class="checkbox checkbox-primary dice-checkbox-second">
+          <input type="checkbox" value=""  id="presentationCheck" name="presentationCheck" ng-checked="all">
+        <label for="presentationCheck">
+            Presentation
+        </label>
+      </div>
+
+    <!-- END New Fill -->
+
+     <button type="submit" class="btn btn-default dice-btn" name="submit"  ng-disabled="myForm.$invalid"  >Submit</button>
+    
+     
+    
+  </form>
+</div>
+
+
+
+</div>
+<!-- End angular - registration controller -->
+
+
+
+<script>
+
+
+function showHint(str) {
+    if (str.length == 0) { 
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "checkForEmailExist.php?q="+str, true);
+        xmlhttp.send();
+    }
+    
+    //document.getElementById("txtHint").innerHTML = "noooooo";
+    
+}
+
+</script>
+
+
+<!-- Source files -->
+<script type="text/javascript" src="../src/func.js"></script>
+
+</body>
+
+
+</html>

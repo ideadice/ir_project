@@ -1,0 +1,62 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+function GetLatestPricesEx() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/getlatestpricesex";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbols=DEDR.L;";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("priceLIVE").innerHTML = data.data.prices.values[0].slice(2, 3); 
+document.getElementById("changeLIVE").innerHTML = data.data.prices.values[0].slice(3, 4); 
+document.getElementById("percentChangeLIVE").innerHTML = data.data.prices.values[0].slice(4, 5); 
+document.getElementById("volumeLIVE").innerHTML = data.data.prices.values[0].slice(7, 8); 
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}
+function GetLatestPricesEx2() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/getlatestpricesex2";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbols=DEDR.L;";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("openLIVE").innerHTML = data.data.prices.values[0].slice(3, 4); 
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}  
+</script>
+
+ 
+
+<body style="padding:20px; font-family: Arial;" onload="GetLatestPricesEx(); GetLatestPricesEx2();">
+
+ <h2>Change</h2>
+
+    <span style="font-weight: bold; padding-right:5px;">price:</span><label id="priceLIVE"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">change:</span><label id="changeLIVE"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">Change%:</span><label id="percentChangeLIVE"></label>%<br>
+    <span style="font-weight: bold; padding-right:5px;">volume:</span><label id="volumeLIVE"></label><br>
+    <span style="font-weight: bold; padding-right:5px;">open:</span><label id="openLIVE"></label><br>
+
