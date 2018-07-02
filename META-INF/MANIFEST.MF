@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Investor_Relations
+Bundle-SymbolicName: Investor_Relations
+Bundle-Version: 1.0.0.qualifier

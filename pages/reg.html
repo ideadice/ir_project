@@ -177,7 +177,7 @@
 <div class="covercls" ng-controller="registration">
 
 <div class="container dice-main">
- <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Fill Details</h2>
+ <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i>   Fill Details</h2>
 
     <form class="form-horizontal" name="myForm"   action="registrationInsert.php" method="post">
 <!--Email-->
@@ -203,7 +203,7 @@
         </div>
         <div class="dice-required-area">
                 <p></p>
-                <p id="requiredName"  ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid" style="color:#f39c12" >First Name must be only letters</p>
+                <p id="requiredName"  ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid" style="color:#f39c12" >First Name must be english letters only</p>
                 <p id="requiredName"  ng-show="!myForm.inp1.$dirty && myForm.inp1.$touched" style="color:red" >First Name is required.</p>    
         </div>    
         
@@ -216,16 +216,15 @@
         </div>
         <div class="dice-required-area">
                 <p></p>
-                <p id="requiredName"  ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid" style="color:#f39c12" >Last Name must be only letters</p>
+                <p id="requiredName"  ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid" style="color:#f39c12" >Last Name must be english letters only</p>
                 <p id="requiredName"  ng-show="!myForm.pName2.$dirty && myForm.pName2.$touched" style="color:red" >Last Name is required.</p>   
         </div>          
 
 <!--Company-->     
         <div class="input-group margin-bottom-sm">
           <span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
-   <input type="text" class="form-control" id="cName" placeholder="Enter Company*" name="cName" ng-model="cName">
-        <span class="glyphicon glyphicon-remove form-control-feedback" style="margin-right:4%;color:#f39c12;" ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid"></span>
-        <span class="glyphicon glyphicon-ok form-control-feedback" style="margin-right:4%;color:green;" ng-show="myForm.pName2.$dirty && myForm.pName2.$valid" ></span>
+   <input type="text" class="form-control" id="cName" placeholder="Enter Company*" name="cName" ng-model="cName"  >
+
         </div>
         <div class="dice-required-area">
                 <p></p>
@@ -320,7 +319,7 @@
         </label>
       </div>
  
-<!--presentation-->
+<!--Presentation-->
       <div class="checkbox checkbox-primary dice-checkbox-second">
           <input type="checkbox" value=""  id="presentationCheck" name="presentationCheck" ng-checked="all">
         <label for="presentationCheck">
