@@ -231,7 +231,7 @@ margin-right:50px!important;
         </div>
         <div class="dice-required-area">
                 <p></p>
-                <p id="requiredName"  ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid" style="color:#f39c12" >שם פרטי חייב להיות רק אותיות</p>
+                <p id="requiredName"  ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid" style="color:#f39c12" > שם פרטי חייב להיות רק אותיות באנגלית</p>
                 <p id="requiredName"  ng-show="!myForm.inp1.$dirty && myForm.inp1.$touched" style="color:red" >שם פרטי הוא שדה חובה.</p>    
         </div>    
         
@@ -244,7 +244,7 @@ margin-right:50px!important;
         </div>
         <div class="dice-required-area">
                 <p></p>
-                <p id="requiredName"  ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid" style="color:#f39c12" >שם משפחה חייב להיות רק אותיות</p>
+                <p id="requiredName"  ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid" style="color:#f39c12" >שם משפחה חייב להיות רק אותיות באנגלית</p>
                 <p id="requiredName"  ng-show="!myForm.pName2.$dirty && myForm.pName2.$touched" style="color:red" >שם משפחה הוא שדה חובה.</p>   
         </div>          
 
@@ -252,8 +252,6 @@ margin-right:50px!important;
         <div class="input-group margin-bottom-sm">
           <span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
    <input type="text" class="form-control dice-en-text" id="cName" placeholder="הכנס חברה (אנגלית)*" name="cName" ng-model="cName">
-        <span class="glyphicon glyphicon-remove form-control-feedback" style="color:#f39c12;" ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid"></span>
-        <span class="glyphicon glyphicon-ok form-control-feedback" style="color:green;" ng-show="myForm.pName2.$dirty && myForm.pName2.$valid" ></span>
         </div>
         <div class="dice-required-area">
                 <p></p>

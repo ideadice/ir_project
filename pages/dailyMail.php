@@ -8,7 +8,7 @@ include "/code/mysql/database.php";
 echo "PHP -Daily Mail send - start";
 
 
-#GeT POST data from serverjs -> sendDailyEmail()
+#Get POST data from serverjs -> sendDailyEmail()
 
     $priceE = $_POST['priceE'];
     $changeE = $_POST['changeE'];

@@ -30,12 +30,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 $volumeLIVES=number_format($volumeLIVE);
-$priceLIVES=$priceLIVE/100;
-$priceLIVES= number_format($priceLIVES,2, '.', '');
-$changeLIVE=$changeLIVES."%";
+//$priceLIVES=$priceLIVE/100;
+//$priceLIVES= number_format($priceLIVES,2, '.', '');
+//$changeLIVES=$changeLIVE."%";
+$percentChangeLIVES=$percentChangeLIVE."%";
 //$changeLIVE= number_format($changeLIVE,2, '.', '');
 
-echo "<br/>price: ".$priceLIVES;
+echo "<br/>price: ".$priceLIVE;
 echo "<br/>change: ".$changeLIVE;
 echo "<br/>Change%: ".$percentChangeLIVE;
 echo "<br/>volume%: ".$volumeLIVES;
@@ -255,13 +256,13 @@ if($resultHaveChange->num_rows > 0  && $percentChangeLIVE<>0 &&  $percentChangeL
                         </tr>
                         <tr>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p align="right" style="text-align:center"><span class="DICE-title-mobile">% Change: </span><span  style="color:black">$percentChangeLIVE<u></u><u></u></span></p>
+                            <p align="right" style="text-align:center"><span class="DICE-title-mobile">% Change: </span><span  style="color:black">$percentChangeLIVES<u></u><u></u></span></p>
                           </td>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p align="right" style="text-align:center"><span class="DICE-title-mobile">Change: </span><span  style="color:black">$changeLIVES<u></u><u></u></span></p>
+                            <p align="right" style="text-align:center"><span class="DICE-title-mobile">Change: </span><span  style="color:black">$changeLIVE<u></u><u></u></span></p>
                           </td>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p align="right" style="text-align:center"><span class="DICE-title-mobile">Last Price: </span><span style="color:black">$priceLIVES<u></u><u></u></span></p>
+                            <p align="right" style="text-align:center"><span class="DICE-title-mobile">Last Price: </span><span style="color:black">$priceLIVE<u></u><u></u></span></p>
                           </td>
                         </tr>
                        
