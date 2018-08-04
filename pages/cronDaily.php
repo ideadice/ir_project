@@ -1,6 +1,10 @@
 <?php
-    
+
+# REMOVED
+
 #Daily API pull - Update database
+
+
 
     #Credentials
     #TODO: Hide credentials

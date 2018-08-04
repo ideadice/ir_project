@@ -1,46 +1,206 @@
 <?php
 #Weekly Mail server side function
 
+##  New Model:      Only this page is needed.
+##                  Get needed values by json, save in the variables below    
+
 #Connect to DB
 include "/code/mysql/database.php";
 
 echo "*PHP* -Weekly Mail send - start";
 
+#START - Get data from API
+
+$jsonPresentation=file_get_contents('http://irwebsites.co.il/Investor_Relations/pages/gto/login.php');
+$json_data_presentation=json_decode($jsonPresentation,true);
+$lengthPresentationJSON = sizeof($json_data_presentation);
+
+function historicalFunction($shiftDate,$todayDate) {
+    $curl = curl_init();
+    
+    #Dynamic API Path
+    $path="https://api.gto.co.il:9005/v2/json/market/history?key=475020&fromDate=".$shiftDate."&toDate=".$todayDate;
+    
+    global $json_data_presentation;
+    
+    curl_setopt_array($curl, array(
+        CURLOPT_PORT => "9005",
+        #CURLOPT_URL => "https://api.gto.co.il:9005/v2/json/market/history?key=475020&fromDate=31072018&toDate=04082018",
+        CURLOPT_URL => $path,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        //CURLOPT_POSTFIELDS => "{\n\t\"Login\": {\n\t\t\n\t\t\"User\":\"apizvi01\",\n\t\t\"Password\":\"12345\"\n\t\n\t}\n}",
+        CURLOPT_HTTPHEADER => array(
+            "Cache-Control: no-cache",
+            "Content-Type: application/json",
+            "session: ".$json_data_presentation["Login"]["SessionKey"]
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    
+    curl_close($curl);
+    
+    return $response;
+}
+
+
+#Work with dates
+#Format: 24062018
+$todayDate=date("dmY");
+
+#test dates
+echo "Today date:"."<br>";
+echo $todayDate;
+echo "<br>";
+#END test dates
+
+$shiftValue="-4";
+$shiftDate=date("dmY",strtotime($shiftValue.' days'));
+
+#test shifted dates
+echo "Shift date:"."<br>";
+echo $shiftDate;
+echo "<br>";
+#END test dates
+
+#Get data for each day of the week
+#Send to function: shiftDate - Sunday, and todayDate - Thursday
+
+$func_output=historicalFunction($shiftDate,$todayDate);
+
+#Order the data of the last 5 days in json
+#Json from 0 to 4 (5 days), first day is 0.
+$resultsjson = json_decode($func_output, true);
+
+#TEST Json - Print json data
+echo "<br>"."Print r results array with pre:";
+echo '<pre>'; print_r($resultsjson); echo '</pre>';
+echo "<br>";
+echo '<pre>'; print_r($resultsjson['History']['Entry']['0']['BaseRate']); echo '</pre>';
+echo "<br>";
+
+#END - Get data from API
+
+
+
+#Get specific values by day
+$exampleField=$resultsjson['History']['Entry']['0']['BaseRate'];
+
+
+#Sunday
+if($resultsjson['History']['Entry']['0']==NULL)
+{
+    #Holidays
+    $SundayOpeningPrice = "Holiday";
+    $SundayLastTrade = "Holiday";
+    $SundayPreviousClose = "Holiday";
+    $SundayDayHigh = "Holiday";
+    $SundayDayLow = "Holiday";
+    $SundayVolume = "Holiday";
+}
+else
+{
+    #Set the values from json data
+    $SundayOpeningPrice = $resultsjson['History']['Entry']['0']['OpeningRate'];
+    $SundayLastTrade = $resultsjson['History']['Entry']['0']['LockRate'];
+    $SundayPreviousClose = $resultsjson['History']['Entry']['0']['BaseRate'];
+    $SundayDayHigh = $resultsjson['History']['Entry']['0']['DailyHigh'];
+    $SundayDayLow = $resultsjson['History']['Entry']['0']['DailyLow'];
+    $SundayVolume = $resultsjson['History']['Entry']['0']['Turnover'];
+}
+#Monday
+if($resultsjson['History']['Entry']['1']==NULL)
+{
+    #Holidays
+    $MondayOpeningPrice = "Holiday";
+    $MondayLastTrade = "Holiday";
+    $MondayPreviousClose = "Holiday";
+    $MondayDayHigh = "Holiday";
+    $MondayDayLow = "Holiday";
+    $MondayVolume = "Holiday";
+}
+else
+{
+    #Set the values from json data
+    $MondayOpeningPrice = $resultsjson['History']['Entry']['1']['OpeningRate'];
+    $MondayLastTrade = $resultsjson['History']['Entry']['1']['LockRate'];
+    $MondayPreviousClose = $resultsjson['History']['Entry']['1']['BaseRate'];
+    $MondayDayHigh = $resultsjson['History']['Entry']['1']['DailyHigh'];
+    $MondayDayLow = $resultsjson['History']['Entry']['1']['DailyLow'];
+    $MondayVolume = $resultsjson['History']['Entry']['1']['Turnover'];
+}
+#Tuesday
+if($resultsjson['History']['Entry']['2']==NULL)
+{
+    #Holidays
+    $TuesdayOpeningPrice = "Holiday";
+    $TuesdayLastTrade = "Holiday";
+    $TuesdayPreviousClose = "Holiday";
+    $TuesdayDayHigh = "Holiday";
+    $TuesdayDayLow = "Holiday";
+    $TuesdayVolume = "Holiday";
+}
+else
+{
+    #Set the values from json data
+    $TuesdayOpeningPrice = $resultsjson['History']['Entry']['2']['OpeningRate'];
+    $TuesdayLastTrade = $resultsjson['History']['Entry']['2']['LockRate'];
+    $TuesdayPreviousClose = $resultsjson['History']['Entry']['2']['BaseRate'];
+    $TuesdayDayHigh = $resultsjson['History']['Entry']['2']['DailyHigh'];
+    $TuesdayDayLow = $resultsjson['History']['Entry']['2']['DailyLow'];
+    $TuesdayVolume = $resultsjson['History']['Entry']['2']['Turnover'];
+}
+#Wednesday
+if($resultsjson['History']['Entry']['3']==NULL)
+{
+    #Holidays
+    $WednesdayOpeningPrice = "Holiday";
+    $WednesdayLastTrade = "Holiday";
+    $WednesdayPreviousClose = "Holiday";
+    $WednesdayDayHigh = "Holiday";
+    $WednesdayDayLow = "Holiday";
+    $WednesdayVolume = "Holiday";
+}
+else
+{
+    #Set the values from json data
+    $WednesdayOpeningPrice = $resultsjson['History']['Entry']['3']['OpeningRate'];
+    $WednesdayLastTrade = $resultsjson['History']['Entry']['3']['LockRate'];
+    $WednesdayPreviousClose = $resultsjson['History']['Entry']['3']['BaseRate'];
+    $WednesdayDayHigh = $resultsjson['History']['Entry']['3']['DailyHigh'];
+    $WednesdayDayLow = $resultsjson['History']['Entry']['3']['DailyLow'];
+    $WednesdayVolume = $resultsjson['History']['Entry']['3']['Turnover'];
+}
+#Thursday
+if($resultsjson['History']['Entry']['3']==NULL)
+{
+    #Holidays
+    $ThursdayOpeningPrice = "Holiday";
+    $ThursdayLastTrade = "Holiday";
+    $ThursdayPreviousClose = "Holiday";
+    $ThursdayDayHigh = "Holiday";
+    $ThursdayDayLow = "Holiday";
+    $ThursdayVolume = "Holiday";
+}
+else
+{
+    #Set the values from json data
+    $ThursdayOpeningPrice = $resultsjson['History']['Entry']['4']['OpeningRate'];
+    $ThursdayLastTrade = $resultsjson['History']['Entry']['4']['LockRate'];
+    $ThursdayPreviousClose = $resultsjson['History']['Entry']['4']['BaseRate'];
+    $ThursdayDayHigh = $resultsjson['History']['Entry']['4']['DailyHigh'];
+    $ThursdayDayLow = $resultsjson['History']['Entry']['4']['DailyLow'];
+    $ThursdayVolume = $resultsjson['History']['Entry']['4']['Turnover'];
+}
+
+
 $todayDate=date("d-m-Y");
 echo "<br> Today date is: ". $todayDate . "<br>";
-
-#Get POST data from serverjs -> sendWeeklyEmail()
-
-$ThursdayOpeningPrice = $_POST['ThursdayOpeningPrice'];
-$ThursdayLastTrade = $_POST['ThursdayLastTrade'];
-$ThursdayPreviousClose = $_POST['ThursdayPreviousClose'];
-$ThursdayDayHigh = $_POST['ThursdayDayHigh'];
-$ThursdayDayLow = $_POST['ThursdayDayLow'];
-$ThursdayVolume = $_POST['ThursdayVolume'];
-$WednesdayOpeningPrice = $_POST['WednesdayOpeningPrice'];
-$WednesdayLastTrade = $_POST['WednesdayLastTrade'];
-$WednesdayPreviousClose = $_POST['WednesdayPreviousClose'];
-$WednesdayDayHigh = $_POST['WednesdayDayHigh'];
-$WednesdayDayLow = $_POST['WednesdayDayLow'];
-$WednesdayVolume = $_POST['WednesdayVolume'];
-$TuesdayOpeningPrice = $_POST['TuesdayOpeningPrice'];
-$TuesdayLastTrade = $_POST['TuesdayLastTrade'];
-$TuesdayPreviousClose = $_POST['TuesdayPreviousClose'];
-$TuesdayDayHigh = $_POST['TuesdayDayHigh'];
-$TuesdayDayLow = $_POST['TuesdayDayLow'];
-$TuesdayVolume = $_POST['TuesdayVolume'];
-$MondayOpeningPrice = $_POST['MondayOpeningPrice'];
-$MondayLastTrade = $_POST['MondayLastTrade'];
-$MondayPreviousClose = $_POST['MondayPreviousClose'];
-$MondayDayHigh = $_POST['MondayDayHigh'];
-$MondayDayLow = $_POST['MondayDayLow'];
-$MondayVolume = $_POST['MondayVolume'];
-$SundayOpeningPrice = $_POST['SundayOpeningPrice'];
-$SundayLastTrade = $_POST['SundayLastTrade'];
-$SundayPreviousClose = $_POST['SundayPreviousClose'];
-$SundayDayHigh = $_POST['SundayDayHigh'];
-$SundayDayLow = $_POST['SundayDayLow'];
-$SundayVolume = $_POST['SundayVolume'];
 
 
 #number format - digits after point, big numbers seperation
@@ -428,10 +588,16 @@ EOT;
         #END HTML Email content
         
         
+        #Test html
+        echo "<br><br><br>";
+        echo $htmlBodyWeekly;
+        
         #New Mailgun object
+        
         $objArr[$i] = new Mailgun('key-1abc61ad099241246e85983d15c4ea02');
         
         #Send Mail
+        /*
         $res[$i] = $objArr[$i]->sendMessage($domain, array(
             'from'    => 'postmaster@irwebsites.co.il',
             'to'      => $row["emailID"],
@@ -443,13 +609,11 @@ EOT;
         
         #increase index
         $i++;
+        */
     }
 } else {
     echo "No results from database";
 }
-
-
-
 
 echo "*PHP* -Weekly Mail send - END";
 ?>

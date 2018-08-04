@@ -2,25 +2,83 @@
 
 #Daily Mail server side function
 
+##  New Model:      Only this page is needed.
+##                  Get needed values by json, save in the variables below            
+
 #Connect to DB
 include "/code/mysql/database.php";
 
 echo "PHP -Daily Mail send - start";
 
+##inits
 
-#Get POST data from serverjs -> sendDailyEmail()
+#Flag for preventing emails on holidays. 0 - email will be sent, 1 - Holiday
+$flag_red=0;
 
-    $priceE = $_POST['priceE'];
-    $changeE = $_POST['changeE'];
-    $pChangeE = $_POST['percentChangeE'];
-    $volumeE = $_POST['volumeE'];
-    $WeekHigh52E = $_POST['WeekHigh52E'];
-    $WeekLow52E = $_POST['WeekLow52E'];
-    $dayhighE = $_POST['dayhighE'];
-    $daylowE = $_POST['daylowE'];
-    $todaysopenE = $_POST['todaysopenE'];
-    $previouscloseE = $_POST['previouscloseE'];
-    
+
+##Get data from API
+
+#Get key
+$jsonLogin=file_get_contents('http://irwebsites.co.il/Investor_Relations/pages/gto/login.php');
+$json_data_Login=json_decode($jsonLogin,true);
+
+#Work with Curl
+$curl3 = curl_init();
+
+curl_setopt_array($curl3, array(
+    CURLOPT_PORT => "9005",
+    CURLOPT_URL => "https://api.gto.co.il:9005/v2/json/market/table/simple?securities=475020&fields=Rate,BaseRateChange,BaseRateChangePercentage,DailyHighestRate,DailyLowestRate,BaseRate,DailyTurnover,AllYearMaximumRate,AllYearMinimumRate",
+    CURLOPT_RETURNTRANSFER => TRUE,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_POSTFIELDS => "{\n\t\"Login\": {\n\t\t\n\t\t\"User\":\"apizvi01\",\n\t\t\"Password\":\"12345\"\n\t\n\t}\n}",
+    CURLOPT_HTTPHEADER => array(
+        "Cache-Control: no-cache",
+        "Content-Type: application/json",
+        "session: ".$json_data_Login["Login"]["SessionKey"]
+    ),
+));
+
+$responseJsonDaily = curl_exec($curl3);
+curl_close($curl3);
+
+
+##END - Get data from API
+
+#Data to json
+$resultsJsonDaily = json_decode($responseJsonDaily, true);
+
+#Print the json as a test
+echo "<br>"."Print r results array with pre:";
+echo '<pre>'; print_r($resultsJsonDaily); echo '</pre>';
+echo "<br>";
+
+
+#Work with the json Data
+if($resultsJsonDaily['History']['Entry']['0']==NULL)
+{
+    #Dont send email !!
+    $flag_red=1;
+}
+else
+{
+    #Set the values from json data
+    $priceE = "VALUE";
+    $changeE = "VALUE";
+    $pChangeE = "VALUE";
+    $volumeE = "VALUE";
+    $WeekHigh52E = "VALUE";
+    $WeekLow52E = "VALUE";
+    $dayhighE = "VALUE";
+    $daylowE = "VALUE";
+    $todaysopenE = "VALUE";
+    $previouscloseE = "VALUE";
+}
+
+
     #init html body variable
     $htmlBody="init";
     
@@ -30,7 +88,8 @@ echo "PHP -Daily Mail send - start";
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "SELECT emailID, privateName, lastName FROM users WHERE dailyflag=1";
+    
+    $sql = "SELECT emailID, privateName, lastName FROM users WHERE dailyflag=2";
     $result = $conn->query($sql);
 
     #Use mailgun library installed on server
@@ -52,6 +111,7 @@ echo "PHP -Daily Mail send - start";
     $i=0;
 
     if ($result->num_rows > 0) {
+        #Go over the users
         while($row = $result->fetch_assoc()) {
             
                      
@@ -341,11 +401,19 @@ EOT;
             
 #END HTML Email content  
             
+            #Test html
+            echo "<br><br><br>";
+            echo $htmlBody;
+
 
             #New Mailgun object
             $objArr[$i] = new Mailgun('key-1abc61ad099241246e85983d15c4ea02');
             
             #Send Mail
+            #/*
+            
+            if($flag_red==0)
+            {
             $res[$i] = $objArr[$i]->sendMessage($domain, array(
                 'from'    => 'postmaster@irwebsites.co.il',
                 'to'      => $row["emailID"],
@@ -354,9 +422,14 @@ EOT;
             ));
             
             echo "Mail sent Successfully !";
-
+            }
+            else
+            {
+                echo "Mail not sent - Holiday !";
+            }
             #increase index
             $i++;
+            
         }
     } else {
         echo "No results from database";
