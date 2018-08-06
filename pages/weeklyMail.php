@@ -21,11 +21,14 @@ function historicalFunction($shiftDate,$todayDate) {
     #Dynamic API Path
     $path="https://api.gto.co.il:9005/v2/json/market/history?key=475020&fromDate=".$shiftDate."&toDate=".$todayDate;
     
+    echo "Path:"."<br>";
+    echo $path;
+    echo "<br>";
+    
     global $json_data_presentation;
     
     curl_setopt_array($curl, array(
         CURLOPT_PORT => "9005",
-        #CURLOPT_URL => "https://api.gto.co.il:9005/v2/json/market/history?key=475020&fromDate=31072018&toDate=04082018",
         CURLOPT_URL => $path,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
@@ -235,7 +238,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT emailID, privateName, lastName FROM users WHERE weeklyflag=1";
+$sql = "SELECT emailID, privateName, lastName FROM users WHERE weeklyflag=2";
 $result = $conn->query($sql);
 
 #Use mailgun library installed on server

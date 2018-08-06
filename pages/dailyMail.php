@@ -27,7 +27,7 @@ $curl3 = curl_init();
 
 curl_setopt_array($curl3, array(
     CURLOPT_PORT => "9005",
-    CURLOPT_URL => "https://api.gto.co.il:9005/v2/json/market/table/simple?securities=475020&fields=Rate,BaseRateChange,BaseRateChangePercentage,DailyHighestRate,DailyLowestRate,BaseRate,DailyTurnover,AllYearMaximumRate,AllYearMinimumRate",
+    CURLOPT_URL => "https://api.gto.co.il:9005/v2/json/market/table/simple?securities=475020&fields=Rate,BaseRateChange,BaseRateChangePercentage,DailyHighestRate,DailyLowestRate,BaseRate,DailyTurnover,AllYearMaximumRate,AllYearMinimumRate,OpenRate",
     CURLOPT_RETURNTRANSFER => TRUE,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -58,7 +58,7 @@ echo "<br>";
 
 
 #Work with the json Data
-if($resultsJsonDaily['History']['Entry']['0']==NULL)
+if($resultsJsonDaily['Table']['Security']['0']==NULL)
 {
     #Dont send email !!
     $flag_red=1;
@@ -66,18 +66,22 @@ if($resultsJsonDaily['History']['Entry']['0']==NULL)
 else
 {
     #Set the values from json data
-    $priceE = "VALUE";
-    $changeE = "VALUE";
-    $pChangeE = "VALUE";
-    $volumeE = "VALUE";
-    $WeekHigh52E = "VALUE";
-    $WeekLow52E = "VALUE";
-    $dayhighE = "VALUE";
-    $daylowE = "VALUE";
-    $todaysopenE = "VALUE";
-    $previouscloseE = "VALUE";
+    $priceE = $resultsJsonDaily['Table']['Security']['0']['Rate'];
+    $changeE = $resultsJsonDaily['Table']['Security']['0']['BaseRateChange'];
+    $pChangeE = $resultsJsonDaily['Table']['Security']['0']['BaseRateChangePercentage'];
+    $volumeE = $resultsJsonDaily['Table']['Security']['0']['DailyTurnover'];
+    $WeekHigh52E = $resultsJsonDaily['Table']['Security']['0']['AllYearMaximumRate'];
+    $WeekLow52E = $resultsJsonDaily['Table']['Security']['0']['AllYearMinimumRate'];
+    $dayhighE = $resultsJsonDaily['Table']['Security']['0']['DailyHighestRate'];
+    $daylowE = $resultsJsonDaily['Table']['Security']['0']['DailyLowestRate'];
+    $todaysopenE = $resultsJsonDaily['Table']['Security']['0']['OpenRate'];
+    $previouscloseE = $resultsJsonDaily['Table']['Security']['0']['BaseRate'];
 }
 
+    #Value tests
+    #echo "<br>"."Print new results val with pre:";
+    #echo '<pre>'; print_r($resultsJsonDaily['Table']['Security']['0']); echo '</pre>';
+    #echo "<br>";
 
     #init html body variable
     $htmlBody="init";
@@ -89,7 +93,7 @@ else
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $sql = "SELECT emailID, privateName, lastName FROM users WHERE dailyflag=2";
+    $sql = "SELECT emailID, privateName, lastName FROM users WHERE dailyflag=1";
     $result = $conn->query($sql);
 
     #Use mailgun library installed on server
