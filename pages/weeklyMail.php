@@ -71,6 +71,7 @@ echo $shiftDate;
 echo "<br>";
 #END test dates
 
+
 #Get data for each day of the week
 #Send to function: shiftDate - Sunday, and todayDate - Thursday
 
@@ -95,16 +96,92 @@ echo "<br>";
 $exampleField=$resultsjson['History']['Entry']['0']['BaseRate'];
 
 
+#Dates for holidays
+#Cut date
+
+$sundayDate=date("d-m-Y",strtotime("-4".' days'));
+$mondayDate=date("d-m-Y",strtotime("-3".' days'));
+$tuesdayDate=date("d-m-Y",strtotime("-2".' days'));
+$wednesdayDate=date("d-m-Y",strtotime("-1".' days'));
+$thursdayDate=date("d-m-Y");
+
+echo "<br>";
+echo "Week dates: ";
+echo "<br>";
+echo $sundayDate;
+echo "<br>";
+echo $mondayDate;
+echo "<br>";
+echo $tuesdayDate;
+echo "<br>";
+echo $wednesdayDate;
+echo "<br>";
+echo $thursdayDate;
+echo "<br>";
+echo "<br>";
+
+$apiDate=substr($resultsjson['History']['Entry']['0']['Date'],0,10);
+echo "<br>";
+echo "Parted date: ";
+print_r($apiDate);
+echo "<br>";
+
+
+#Dates from API - Used in the HTML Code
+$apiDateSunday=substr($resultsjson['History']['Entry']['0']['Date'],0,10);
+$apiDateMonday=substr($resultsjson['History']['Entry']['1']['Date'],0,10);
+$apiDateTuesday=substr($resultsjson['History']['Entry']['2']['Date'],0,10);
+$apiDateWednesday=substr($resultsjson['History']['Entry']['3']['Date'],0,10);
+$apiDateThursday=substr($resultsjson['History']['Entry']['4']['Date'],0,10);
+
+#Change date structure
+if($apiDateSunday != null){
+    $apiDateSunday = date("d-m-Y", strtotime($apiDateSunday));
+}
+else
+{
+    $apiDateSunday="-";
+}
+if($apiDateMonday != null){
+    $apiDateMonday = date("d-m-Y", strtotime($apiDateMonday));
+}
+else
+{
+    $apiDateMonday="-";
+}
+if($apiDateTuesday != null){
+    $apiDateTuesday = date("d-m-Y", strtotime($apiDateTuesday));
+}
+else
+{
+    $apiDateTuesday="-";
+}
+if($apiDateWednesday != null){
+    $apiDateWednesday = date("d-m-Y", strtotime($apiDateWednesday));
+}
+else
+{
+    $apiDateWednesday="-";
+}
+if($apiDateThursday != null){
+    $apiDateThursday = date("d-m-Y", strtotime($apiDateThursday));
+}
+else
+{
+    $apiDateThursday="-";
+}
+
+#Values
 #Sunday
 if($resultsjson['History']['Entry']['0']==NULL)
 {
     #Holidays
-    $SundayOpeningPrice = "Holiday";
-    $SundayLastTrade = "Holiday";
-    $SundayPreviousClose = "Holiday";
-    $SundayDayHigh = "Holiday";
-    $SundayDayLow = "Holiday";
-    $SundayVolume = "Holiday";
+    $SundayOpeningPrice = "-";
+    $SundayLastTrade = "-";
+    $SundayPreviousClose = "-";
+    $SundayDayHigh = "-";
+    $SundayDayLow = "-";
+    $SundayVolume = "-";
 }
 else
 {
@@ -120,12 +197,12 @@ else
 if($resultsjson['History']['Entry']['1']==NULL)
 {
     #Holidays
-    $MondayOpeningPrice = "Holiday";
-    $MondayLastTrade = "Holiday";
-    $MondayPreviousClose = "Holiday";
-    $MondayDayHigh = "Holiday";
-    $MondayDayLow = "Holiday";
-    $MondayVolume = "Holiday";
+    $MondayOpeningPrice = "-";
+    $MondayLastTrade = "-";
+    $MondayPreviousClose = "-";
+    $MondayDayHigh = "-";
+    $MondayDayLow = "-";
+    $MondayVolume = "-";
 }
 else
 {
@@ -141,12 +218,12 @@ else
 if($resultsjson['History']['Entry']['2']==NULL)
 {
     #Holidays
-    $TuesdayOpeningPrice = "Holiday";
-    $TuesdayLastTrade = "Holiday";
-    $TuesdayPreviousClose = "Holiday";
-    $TuesdayDayHigh = "Holiday";
-    $TuesdayDayLow = "Holiday";
-    $TuesdayVolume = "Holiday";
+    $TuesdayOpeningPrice = "-";
+    $TuesdayLastTrade = "-";
+    $TuesdayPreviousClose = "-";
+    $TuesdayDayHigh = "-";
+    $TuesdayDayLow = "-";
+    $TuesdayVolume = "-";
 }
 else
 {
@@ -162,12 +239,12 @@ else
 if($resultsjson['History']['Entry']['3']==NULL)
 {
     #Holidays
-    $WednesdayOpeningPrice = "Holiday";
-    $WednesdayLastTrade = "Holiday";
-    $WednesdayPreviousClose = "Holiday";
-    $WednesdayDayHigh = "Holiday";
-    $WednesdayDayLow = "Holiday";
-    $WednesdayVolume = "Holiday";
+    $WednesdayOpeningPrice = "-";
+    $WednesdayLastTrade = "-";
+    $WednesdayPreviousClose = "-";
+    $WednesdayDayHigh = "-";
+    $WednesdayDayLow = "-";
+    $WednesdayVolume = "-";
 }
 else
 {
@@ -180,15 +257,15 @@ else
     $WednesdayVolume = $resultsjson['History']['Entry']['3']['Turnover'];
 }
 #Thursday
-if($resultsjson['History']['Entry']['3']==NULL)
+if($resultsjson['History']['Entry']['4']==NULL)
 {
     #Holidays
-    $ThursdayOpeningPrice = "Holiday";
-    $ThursdayLastTrade = "Holiday";
-    $ThursdayPreviousClose = "Holiday";
-    $ThursdayDayHigh = "Holiday";
-    $ThursdayDayLow = "Holiday";
-    $ThursdayVolume = "Holiday";
+    $ThursdayOpeningPrice = "-";
+    $ThursdayLastTrade = "-";
+    $ThursdayPreviousClose = "-";
+    $ThursdayDayHigh = "-";
+    $ThursdayDayLow = "-";
+    $ThursdayVolume = "-";
 }
 else
 {
@@ -238,7 +315,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT emailID, privateName, lastName FROM users WHERE weeklyflag=2";
+$sql = "SELECT emailID, privateName, lastName FROM users WHERE weeklyflag=1";
 $result = $conn->query($sql);
 
 #Use mailgun library installed on server
@@ -396,14 +473,14 @@ if ($result->num_rows > 0) {
                                <br>
                 
                 
-                <div class="title" style="text-align:center; font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">Delek Drilling: weekly share summary</div>
+                <div class="title" style="text-align:center; font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">Delek Drilling: Weekly Share Summary</div>
                 <br><br>
                 
                 <div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333">
-                  Hi $userName
+                  Hi, $userName
                   <br><br>
                 
-                  Check out the weekly summary for the Delek Drilling share
+                  Check out the weekly summary for the Delek Drilling share:
                   <br><br>
                  <table class="DICE-WEEK" border="1" cellspacing="0" cellpadding="0" style="width: 100%; border:outset #fdfdfd 1.0pt">
                       <tbody>
@@ -432,7 +509,7 @@ if ($result->num_rows > 0) {
                         </tr>
                         <tr>
                           <td class="DICE-WEEK-td" style="border:inset #fdfdfd 1.0pt;text-align:center;background:#f9f9f9;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p><b><span style="color:black;">Sunday</span></b><span style="color:black"><u></u><u></u></span></p>
+                            <p><b><span style="color:black;">$apiDateSunday</span></b><span style="color:black"><u></u><u></u></span></p>
                           </td>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
                             <p align="right" style="text-align:center"><span class="DICE-title-mobile">Opening Price: </span><span  style="color:black">$SundayOpeningPrice<u></u><u></u></span></p>
@@ -455,7 +532,7 @@ if ($result->num_rows > 0) {
                         </tr>
                         <tr>
                           <td class="DICE-WEEK-td" style="text-align:center;border:inset #fdfdfd 1.0pt;background:#f9f9f9;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p><b><span style="color:black">Monday</span></b><span style="color:black"><u></u><u></u></span></p>
+                            <p><b><span style="color:black">$apiDateMonday</span></b><span style="color:black"><u></u><u></u></span></p>
                           </td>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
                             <p align="right" style="text-align:center"><span class="DICE-title-mobile">Opening Price: </span><span  style="color:black">$MondayOpeningPrice<u></u><u></u></span></p>
@@ -478,7 +555,7 @@ if ($result->num_rows > 0) {
                         </tr>
                         <tr>
                           <td class="DICE-WEEK-td" style="text-align:center;border:inset #fdfdfd 1.0pt;background:#f9f9f9;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p><b><span style="color:black">Tuesday</span></b><span style="color:black"><u></u><u></u></span></p>
+                            <p><b><span style="color:black">$apiDateTuesday</span></b><span style="color:black"><u></u><u></u></span></p>
                           </td>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
                             <p align="right" style="text-align:center"><span class="DICE-title-mobile">Opening Price: </span><span style="color:black">$TuesdayOpeningPrice<u></u><u></u></span></p>
@@ -501,7 +578,7 @@ if ($result->num_rows > 0) {
                         </tr>
                         <tr>
                           <td class="DICE-WEEK-td" style="text-align:center;border:inset #fdfdfd 1.0pt;background:#f9f9f9;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p><b><span style="color:black">Wednesday</span></b><span style="color:black"><u></u><u></u></span></p>
+                            <p><b><span style="color:black">$apiDateWednesday</span></b><span style="color:black"><u></u><u></u></span></p>
                           </td>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
                             <p align="right" style="text-align:center"><span class="DICE-title-mobile">Opening Price: </span><spanstyle="color:black">$WednesdayOpeningPrice<u></u><u></u></span></p>
@@ -524,7 +601,7 @@ if ($result->num_rows > 0) {
                         </tr>
                         <tr>
                           <td class="DICE-WEEK-td" style="text-align:center;border:inset #fdfdfd 1.0pt;background:#f9f9f9;padding:1.5pt 1.5pt 1.5pt 1.5pt">
-                            <p><b><span style="color:black">Thursday</span></b><span style="color:black"><u></u><u></u></span></p>
+                            <p><b><span style="color:black">$apiDateThursday</span></b><span style="color:black"><u></u><u></u></span></p>
                           </td>
                           <td class="DICE-WEEK-td" valign="top" style="border:inset #fdfdfd 1.0pt;background:white;padding:1.5pt 1.5pt 1.5pt 1.5pt">
                             <p align="right" style="text-align:center"><span class="DICE-title-mobile">Opening Price: </span><spanstyle="color:black">$ThursdayOpeningPrice<u></u><u></u></span></p>
@@ -600,7 +677,7 @@ EOT;
         $objArr[$i] = new Mailgun('key-1abc61ad099241246e85983d15c4ea02');
         
         #Send Mail
-        /*
+        
         $res[$i] = $objArr[$i]->sendMessage($domain, array(
             'from'    => 'postmaster@irwebsites.co.il',
             'to'      => $row["emailID"],
@@ -612,7 +689,7 @@ EOT;
         
         #increase index
         $i++;
-        */
+        
     }
 } else {
     echo "No results from database";

@@ -58,8 +58,9 @@ echo "<br>";
 
 
 #Work with the json Data
-if($resultsJsonDaily['Table']['Security']['0']==NULL)
+if(($resultsJsonDaily['Table']['Security']['0']==NULL) or ($resultsJsonDaily['Table']['Security']['0']['OpenRate']==NULL and $resultsJsonDaily['Table']['Security']['0']['BaseRateChange']==NULL))
 {
+    #Detect holidays
     #Dont send email !!
     $flag_red=1;
 }
