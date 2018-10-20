@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="windows-1255">
+<title>Cron Daily</title>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script>
+    function UserAction() {
+    var callUrl = "https://api.stockdio.com/data/financial/prices/v1/getlatestpricesex";
+    var dataParam = "app-key=F2A5C7076BE141C79350BFA00AE3EC4B&stockExchange=TASE&symbols=DEDR.L;";
+    
+    $.ajax({
+        type: "GET",
+        url: callUrl,
+        data: dataParam,
+        dataType: "json",
+        success: function (data) {
+
+document.getElementById("symbol").innerHTML = data.data.prices.values[0].slice(0, 1);
+document.getElementById("time").innerHTML = data.data.prices.values[0].slice(1, 2); 
+document.getElementById("price").innerHTML = data.data.prices.values[0].slice(2, 3); 
+document.getElementById("change").innerHTML = data.data.prices.values[0].slice(3, 4); 
+document.getElementById("percentChange").innerHTML = data.data.prices.values[0].slice(4, 5); 
+document.getElementById("volume").innerHTML = data.data.prices.values[0].slice(7, 8); 
+        },
+
+        error: function (xhr, ajaxOptions, thrownError) {
+
+        }
+
+    });
+
+}
+</script>
+<body onload="UserAction()">
+
+ <h1 style="margin-left:10%;">API pull 01</h1>
+
+<label id="symbol"></label><br>
+<label id="time"></label><br>
+<label id="price"></label><br>
+<label id="change"></label><br>
+<label id="percentChange"></label><br>
+<label id="volume"></label><br>
+
+
+
+
+</body>

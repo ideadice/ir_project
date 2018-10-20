@@ -279,28 +279,28 @@ else
 }
 
 
-$todayDate=date("d-m-Y");
-echo "<br> Today date is: ". $todayDate . "<br>";
+#$todayDate=date("d-m-Y");
+#echo "<br> Today date is: ". $todayDate . "<br>";
 
 
 #number format - digits after point, big numbers seperation
-if($SundayPreviousClose!="Holiday"){
+if($SundayPreviousClose!="-"){
     $SundayVolume=number_format($SundayVolume);
     $SundayPreviousClose=number_format($SundayPreviousClose,2);
 }
-if($MondayPreviousClose!="Holiday"){
+if($MondayPreviousClose!="-"){
     $MondayVolume=number_format($MondayVolume);
     $MondayPreviousClose=number_format($MondayPreviousClose,2);
 }
-if($TuesdayPreviousClose!="Holiday"){
+if($TuesdayPreviousClose!="-"){
     $TuesdayVolume=number_format($TuesdayVolume);
     $TuesdayPreviousClose=number_format($TuesdayPreviousClose,2);
 }
-if($WednesdayPreviousClose!="Holiday"){
+if($WednesdayPreviousClose!="-"){
     $WednesdayVolume=number_format($WednesdayVolume);
     $WednesdayPreviousClose=number_format($WednesdayPreviousClose,2);
 }
-if($ThursdayPreviousClose!="Holiday"){
+if($ThursdayPreviousClose!="-"){
     $ThursdayVolume=number_format($ThursdayVolume);
     $ThursdayPreviousClose=number_format($ThursdayPreviousClose,2);
 }
@@ -323,11 +323,12 @@ require '/var/www/html/mailgun-php/vendor/autoload.php';
 use Mailgun\Mailgun;
 $domain = "irwebsites.co.il";
 
-
 #Run on all the emails & create new mailgun objects
+echo "<br> **DEBUG ** Before variables set ";
 $objArr = [];
 $res = [];
 $i=0;
+
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -677,7 +678,7 @@ EOT;
         $objArr[$i] = new Mailgun('key-1abc61ad099241246e85983d15c4ea02');
         
         #Send Mail
-        
+
         $res[$i] = $objArr[$i]->sendMessage($domain, array(
             'from'    => 'postmaster@irwebsites.co.il',
             'to'      => $row["emailID"],
@@ -685,6 +686,7 @@ EOT;
             'html'    => $htmlBodyWeekly
         ));
         
+        echo " *** AFTER mail send";
         echo "Mail sent Successfully !";
         
         #increase index

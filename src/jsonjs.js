@@ -17,8 +17,7 @@ var previousclose;
 
 
 function getNewData() {
-	var key;
-	
+
 	var settings = {
 			 "async": true,
 			 "crossDomain": true,
@@ -31,8 +30,6 @@ function getNewData() {
 			 "processData": false,
 			 "data": "{\n\t\"Login\": {\n\t\t\n\t\t\"User\":\"apizvi01\",\n\t\t\"Password\":\"12345\"\n\t\n\t}\n}"
 			}$.ajax(settings).done(function (response) {
-				key=response;
-				document.getElementById("test0010").innerHTML = key;
 				console.log(response);
 			});
 

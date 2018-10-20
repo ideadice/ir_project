@@ -1,0 +1,42 @@
+    body {
+    margin: 0;
+}
+
+div{ 
+  width:100%;
+  direction:ltr;
+}  
+
+dl{
+  letter-spacing:-0.31em;
+  *letter-spacing:normal;
+  word-spacing:-0.43em;
+  background-color: #f9f9f9;
+  font-size:14px;
+    line-height: 20px;
+    font-family: sans-serif;
+    
+}
+dl dt,
+dl dd {
+  display:inline-block;
+  *display:inline;
+  zoom:1;
+  letter-spacing:normal;
+  word-spacing:normal;
+  vertical-align:middle;
+  padding:0;
+  margin:0;
+}
+dl dt{
+  font-weight:600;
+  width:48%;
+  padding: 0 0 0 2%;
+      border-bottom: 1px solid #cfcfcf;
+}
+dl dd{ 
+  margin-right:-1px;
+  width:50%;
+  padding: 0 0 0 0;
+      border-bottom: 1px solid #cfcfcf;
+}   
