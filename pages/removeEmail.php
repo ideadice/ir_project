@@ -241,7 +241,7 @@ if($flag==1){
 								Delek Drilling, Abba Eban 19, Herzelia Pituh
 								<br>
 								
-							  <br> Did you unsubscribe by accident? <a href="http://ir.delekdrilling.co.il/alert/" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Re-subscribe</a>.
+							  <br> Did you unsubscribe by accident? <a href="https://www.delekdrilling.co.il/en/investor-relations/mail-notifications" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Re-subscribe</a>.
 					</div>
 							  </td>
 							</tr>
@@ -275,7 +275,7 @@ EOT;
         
         #Send Mail
         $res[$i] = $objArr[$i]->sendMessage($domain, array(
-            'from'    => 'postmaster@irwebsites.co.il',
+            'from'    => 'delekdrilling@irwebsites.co.il',
             'to'      =>  $email,
             'subject' => 'Delek Drilling: Unsubscribe Successfully',
                 'html'    => $htmlBodyPosts1

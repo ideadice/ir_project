@@ -2,7 +2,24 @@
 
 
 #Connect to DB
-include "/code/mysql/database.php";
+//include "/code/mysql/database.php";
+
+
+
+
+$servername = "212.111.42.168";
+$username = "tvlad";
+$password = "Vldt!896";
+$dbname = "stockquote";
+
+
+// Create connection
+/*$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}*/
+
 
       /*START LogIn part*/
 $curl_logIn = curl_init();
@@ -80,11 +97,40 @@ $AllYearMaximumRate=$results_json[Table][Security][0][AllYearMaximumRate];
 $AllYearMinimumRate=$results_json[Table][Security][0][AllYearMinimumRate];
 
 
-/*$LastDealDate=$results_json[Table][Security][0][LastDealDate];
-$DailyTurnover=$results_json[Table][Security][0][DailyTurnover];*/
+
+
+
+/*idcompany increment*/
+
+/*$sql = "insert into stockquote (idcompany,BaseRateChangePercentage,BaseRate,Rate,BaseRateChange
+                                ,DailyHighestRate,DailyLowestRate,HebName,EngName,HebSymbol,EngSymbol,DailyExchange,Symbol
+                                ,AllYearMaximumRate,AllYearMinimumRate)
+                                values (".$BaseRateChangePercentage.",".$BaseRate.",".$Rate.",".$BaseRateChange.",".$DailyHighestRate.",".$DailyLowestRate.",".$HebName.",".$Rate.",".$Rate.",".$Rate.",".$Rate.",".$Rate.","*/
+                                
+                              /*  update stockquote.stockValues
+                                set BaseRateChangePercentage=918
+                                where idcompany=
+                                
+                                select idcompany from stockquote.stockValues
+                                where idcompany=*/
+
+/*$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $idMaxDB=$row["idmax"];
+        $dateMaxDB=$row["datemax"];
+        
+        echo "<br> id: ". $row["idpost"]. " - idmax: ". $row["idmax"]. " " . $row["datemax"] . "<br>";
+    }
+} else {
+    echo "0 results";
+}
 
                
-
+echo $sql;*/
 ?>
 
 

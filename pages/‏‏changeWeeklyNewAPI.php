@@ -399,7 +399,7 @@ EOT;
             
             #Send Mail
             $res[$i] = $objArr[$i]->sendMessage($domain, array(
-                'from'    => 'postmaster@irwebsites.co.il',
+                'from'    => 'delekdrilling@irwebsites.co.il',
                 'to'      => $row["emailID"],
                 'subject' => 'Delek Drilling: change in share price-'.$date.'-'.$time,
                 'html'    => $htmlBodyPosts1

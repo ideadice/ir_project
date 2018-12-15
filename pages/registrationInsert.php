@@ -71,8 +71,7 @@ if( isset($_POST['submit']) )//Check if submit button clicked.
     
     
     //values of update posts.
-    // $allCheck = htmlentities($_POST['allCheck']);
-    
+
    // if(isset($_POST['allCheck'])==true){//check if checkbox all choosen.
        // $immediateCheck = 1;
        // $newsCheck= 1;
@@ -80,10 +79,10 @@ if( isset($_POST['submit']) )//Check if submit button clicked.
        // $presentationCheck= 1;  
    // }
    // else if(isset($_POST['allCheck'])==false){
-        if(isset($_POST['immediateCheck'])==true){$immediateCheck=1;} else  {$immediateCheck=0;}
-        if(isset($_POST['newsCheck'])==true){$newsCheck=1;} else  {$newsCheck=0;}
+        if(isset($_POST['immediateCheck'])==true){$NewsUpdate=1;} else  {$NewsUpdate=0;}
+        /*if(isset($_POST['newsCheck'])==true){$newsCheck=1;} else  {$newsCheck=0;}
         if(isset($_POST['financialCheck'])==true){$financialCheck=1;} else  {$financialCheck=0;}
-        if(isset($_POST['presentationCheck'])==true){$presentationCheck=1;} else  {$presentationCheck=0;}
+        if(isset($_POST['presentationCheck'])==true){$presentationCheck=1;} else  {$presentationCheck=0;}*/
       // }
 }
 
@@ -116,7 +115,7 @@ if($flag==0){
     
     
     //new 07/02/2018
-    $sql = "INSERT INTO users (emailID,privateName,lastName,companyName,country,weeklyflag,dailyflag,financialReports,presentation,news,immediateReports,changingPercent,PercentChangingOfStockPrice,sendToEmail) VALUES ('$email', '$inp1', '$pName2', '$cName','$country',$weeklySummaryStock, $dailySummaryStock, $financialCheck, $presentationCheck, $newsCheck, $immediateCheck, $percent, $stockThresholdAlert,$sendToemail)";
+    $sql = "INSERT INTO users (emailID,privateName,lastName,companyName,country,weeklyflag,dailyflag,NewsUpdate,changingPercent,PercentChangingOfStockPrice,sendToEmail) VALUES ('$email', '$inp1', '$pName2', '$cName','$country',$weeklySummaryStock, $dailySummaryStock, $NewsUpdate, $percent, $stockThresholdAlert,$sendToemail)";
     //END new 07/02/2018
     
     $i=0;
@@ -303,7 +302,7 @@ if($flag==0){
 								Delek Drilling, Abba Eban 19, Herzelia Pituh
 								<br>
 								
-							  <br> Don't like these emails? <a href="http://ir.delekdrilling.co.il/unsubscribe/" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
+							  <br> Don't like these emails? <a href="https://www.delekdrilling.co.il/en/investor-relations/unsubscribe" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
 					</div>
 							  </td>
 							</tr>
@@ -337,7 +336,7 @@ EOT;
         
         #Send Mail
         $res[$i] = $objArr[$i]->sendMessage($domain, array(
-        'from'    => 'postmaster@irwebsites.co.il',
+        'from'    => 'delekdrilling@irwebsites.co.il',
         'to'      =>  $email,
         'subject' => 'Delek Drilling: Registration Complete',
         'html'    => $htmlBodyPosts1

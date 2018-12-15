@@ -368,8 +368,7 @@ $htmlBody=<<<EOT
                 </div>
                 <br><br>
                 <div align="left" style="margin:0 auto; width:100%; text-align:left; font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:16px;color:#333;">
-                We will be happy to provide you with more information, please <a href="http://ir.delekdrilling.co.il/contact-us/" style="text-decoration: underline; color: #999999; ">contact us</a>.  <br>
-                <br>Thank you, <br>
+                Thank you, <br>
                 Delek Drilling IR Team.    
                 </div>
                 
@@ -378,7 +377,7 @@ $htmlBody=<<<EOT
                             Delek Drilling, Abba Eban 19, Herzelia Pituah
                             <br>
                 
-                          <br> Don't like these emails? <a href="http://ir.delekdrilling.co.il/unsubscribe/" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
+                          <br> Don't like these emails? <a href="https://www.delekdrilling.co.il/en/investor-relations/unsubscribe" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
                 </div>
                           </td>
                         </tr>
@@ -420,7 +419,7 @@ EOT;
             if($flag_red==0)
             {
             $res[$i] = $objArr[$i]->sendMessage($domain, array(
-                'from'    => 'postmaster@irwebsites.co.il',
+                'from'    => 'delekdrilling@irwebsites.co.il',
                 'to'      => $row["emailID"],
                 'subject' => 'Delek Drilling: Daily summary - '.$todayDate,
                 'html'    => $htmlBody
