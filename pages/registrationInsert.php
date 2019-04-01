@@ -2,9 +2,6 @@
 <?php
 
 
-
-
-
 //new 07/02/18
 
 #Use mailgun library installed on server
@@ -13,14 +10,17 @@ use Mailgun\Mailgun;
 $domain = "irwebsites.co.il";
 
 
-
-
-
-
 #Connect to DB
 include "/code/mysql/database.php";
 
-echo "begin";
+			//remove all the space and html charactrers 
+			function test_input($data)
+			{
+			$data=trim($data);//remove the all spaces
+			$data=stripslashes($data);
+			$data=htmlspecialchars($data);//remove html chars
+			 return $data;
+			}
 
 
 // Create connection
@@ -33,12 +33,14 @@ if ($conn->connect_error) {
 
 if( isset($_POST['submit']) )//Check if submit button clicked.
 {
+
+
     //be sure to validate and clean your variables
-    $email = htmlentities($_POST['email']);
-    $inp1 = htmlentities($_POST['inp1']);
-    $pName2 = htmlentities($_POST['pName2']);
-    $cName = htmlentities($_POST['cName']);
-    $country=htmlentities($_POST['sel1']);
+    $email = htmlentities(test_input($_POST['email']));
+    $inp1 = htmlentities(test_input($_POST['inp1']));
+    $pName2 = htmlentities(test_input($_POST['pName2']));
+    $cName = htmlentities(test_input($_POST['cName']));
+    $country=htmlentities(test_input($_POST['sel1']));
     //$country= isset($_POST['sel1']);
     
     
@@ -48,10 +50,8 @@ if( isset($_POST['submit']) )//Check if submit button clicked.
     } else {
         echo "task option is required";
         exit;
-    }
-    
-    
-    
+		}
+		 
     //values of update stock.
     if(isset($_POST['dailySummaryStock'])==true){$dailySummaryStock=1;} else  {$dailySummaryStock=0;}
     if(isset($_POST['weeklySummaryStock'])==true){$weeklySummaryStock=1;} else {$weeklySummaryStock=0;}
@@ -61,7 +61,7 @@ if( isset($_POST['submit']) )//Check if submit button clicked.
     //checks if the user want update of changee stock and get the desire number.
     if(isset($_POST['stockThresholdAlert']))
     { 
-      $percent1 = htmlentities($_POST['percent']);
+      $percent1 = htmlentities(test_input($_POST['percent']));
       
       $percent= substr($percent1,0,1);//slice the first character.
       if($percent=='%'){
@@ -69,59 +69,67 @@ if( isset($_POST['submit']) )//Check if submit button clicked.
       }
     }
     
-    
-    //values of update posts.
-
-   // if(isset($_POST['allCheck'])==true){//check if checkbox all choosen.
-       // $immediateCheck = 1;
-       // $newsCheck= 1;
-       // $financialCheck =1;
-       // $presentationCheck= 1;  
-   // }
-   // else if(isset($_POST['allCheck'])==false){
         if(isset($_POST['immediateCheck'])==true){$NewsUpdate=1;} else  {$NewsUpdate=0;}
-        /*if(isset($_POST['newsCheck'])==true){$newsCheck=1;} else  {$newsCheck=0;}
-        if(isset($_POST['financialCheck'])==true){$financialCheck=1;} else  {$financialCheck=0;}
-        if(isset($_POST['presentationCheck'])==true){$presentationCheck=1;} else  {$presentationCheck=0;}*/
-      // }
+
 }
 
-    
-    //$sql = "INSERT INTO users (emailID,privateName,lastName,companyName) VALUES ('$val1', '$val2', '$val3', '$val4')";
-    
-
-$sql = "SELECT emailID FROM users";
-$result = $conn->query($sql);
-
-$flag=0;//checks if the emailID already exists.
+// Remove all illegal characters by sanitize
+$email=filter_var($email,FILTER_SANITIZE_EMAIL);
+$inp1 =  filter_var($inp1, FILTER_SANITIZE_STRING);
+$pName2 =  filter_var($pName2, FILTER_SANITIZE_STRING);
+$cName =  filter_var($cName, FILTER_SANITIZE_STRING);
+$country= filter_var($country, FILTER_SANITIZE_STRING);
 
 
-//if the emailID exist flag=1,else flag=0.
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()){
-        if($email==$row['emailID']){           
-            $flag=1;
-        }   
-   }
+if (!preg_match("/^[a-zA-Z ]*$/",$inp1)) {
+	$inp1= preg_replace("/[^A-Za-z?! ]/","",$inp1);
+}
+if (!preg_match("/^[a-zA-Z ]*$/",$pName2 )) {
+	$pName2 = preg_replace("/[^A-Za-z?! ]/","",$pName2);
+}
+if (!preg_match("/^[a-zA-Z ]*$/",$cName)) {
+	$cName= preg_replace("/[^A-Za-z?! ]/","",$cName);
+}
+if (!preg_match("/^[a-zA-Z ]*$/",$country)) {
+	$country= preg_replace("/[^A-Za-z?! ]/","",$country);
 }
 
-
-
-
+/*if(!filter_var($email,FILTER_VALIDATE_EMAIL)===false){
+echo "email is valid email address";
+}else echo "email is not a valid email address! ";
+*/
 $sendToemail=0;
 
+	if(!filter_var($email,FILTER_VALIDATE_EMAIL)===false)
+	{
+    $query = "insert into  users (emailID,privateName,lastName,companyName,country,weeklyflag,dailyflag,NewsUpdate,changingPercent,PercentChangingOfStockPrice,sendToEmail) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+ 
+		// prepare query 
+		$stmt = $conn->prepare($query);
 
-if($flag==0){
-    
-    
+		// sanitize
+		$email=htmlspecialchars(strip_tags($email));
+		$inp1=htmlspecialchars(strip_tags($inp1));
+		$pName2=htmlspecialchars(strip_tags($pName2));
+		$cName=htmlspecialchars(strip_tags($cName));
+		$country=htmlspecialchars(strip_tags($country));
+		$weeklySummaryStock=htmlspecialchars(strip_tags($weeklySummaryStock));
+		$dailySummaryStock=htmlspecialchars(strip_tags($dailySummaryStock));
+		$NewsUpdate=htmlspecialchars(strip_tags($NewsUpdate));
+		$percent=htmlspecialchars(strip_tags($percent));
+		$stockThresholdAlert=htmlspecialchars(strip_tags($stockThresholdAlert));
+		$sendToemail=htmlspecialchars(strip_tags($sendToemail));
+
+		// bind values
+		$stmt->bind_param("sssssiiidii",$email, $inp1, $pName2, $cName,$country,$weeklySummaryStock, $dailySummaryStock, $NewsUpdate, $percent, $stockThresholdAlert,$sendToemail);
+
     //new 07/02/2018
-    $sql = "INSERT INTO users (emailID,privateName,lastName,companyName,country,weeklyflag,dailyflag,NewsUpdate,changingPercent,PercentChangingOfStockPrice,sendToEmail) VALUES ('$email', '$inp1', '$pName2', '$cName','$country',$weeklySummaryStock, $dailySummaryStock, $NewsUpdate, $percent, $stockThresholdAlert,$sendToemail)";
+    //$sql = "INSERT INTO users (emailID,privateName,lastName,companyName,country,weeklyflag,dailyflag,NewsUpdate,changingPercent,PercentChangingOfStockPrice,sendToEmail) VALUES ('$email', '$inp1', '$pName2', '$cName','$country',$weeklySummaryStock, $dailySummaryStock, $NewsUpdate, $percent, $stockThresholdAlert,$sendToemail)";
     //END new 07/02/2018
     
     $i=0;
-   // $sql = "INSERT INTO users (emailID,privateName,lastName,companyName,country,weeklyflag,dailyflag,financialReports,presentation,news,immediateReports,changingPercent,PercentChangingOfStockPrice) VALUES ('$email', '$inp1', '$pName2', '$cName','$country',$weeklySummaryStock, $dailySummaryStock, $financialCheck, $presentationCheck, $newsCheck, $immediateCheck, $percent, $stockThresholdAlert)";
-
-    if ($conn->query($sql)=== TRUE) {
+			// execute query
+    if ($stmt->execute()=== TRUE) {
         
         #Receiver full name for email content
         $nameString=$pName2." ".$inp1;
@@ -280,7 +288,7 @@ if($flag==0){
 					<br><br>
 					
 					<div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333">
-					  Hi $nameString
+					  Hi $nameString  
 					  <br><br>
 					  You have been successfully registered to Delek Drilling investor relations mail alert.
 					  <br>
@@ -302,7 +310,7 @@ if($flag==0){
 								Delek Drilling, Abba Eban 19, Herzelia Pituh
 								<br>
 								
-							  <br> Don't like these emails? <a href="https://www.delekdrilling.co.il/en/investor-relations/unsubscribe" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
+							  <br> Don't like these emails? <a href="http://ir.delekdrilling.co.il/unsubscribe/" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
 					</div>
 							  </td>
 							</tr>
@@ -336,7 +344,7 @@ EOT;
         
         #Send Mail
         $res[$i] = $objArr[$i]->sendMessage($domain, array(
-        'from'    => 'delekdrilling@irwebsites.co.il',
+        'from'    => 'postmaster@irwebsites.co.il',
         'to'      =>  $email,
         'subject' => 'Delek Drilling: Registration Complete',
         'html'    => $htmlBodyPosts1
