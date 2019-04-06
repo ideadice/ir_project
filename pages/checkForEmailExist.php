@@ -22,13 +22,6 @@ $q = $_REQUEST["q"];
 $hint = "";
 
 
-//if ($result->num_rows > 0) {
-//    while($row = $result->fetch_assoc()){
-//        echo "<br/>".$row["emailID"];
-//    }
-//}
-
-
 if ($q !== "") {
     $q = strtolower($q);
     $len=strlen($q);
