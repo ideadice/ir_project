@@ -300,7 +300,7 @@ if($flag==0){
 								Delek Drilling, Abba Eban 19, Herzelia Pituh
 								<br>
 								
-							  <br>Don't like these emails? <a href="http://ir.delekdrilling.co.il/unsubscribe/" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
+							  <br>Don't like these emails? <a href="https://www.delekdrilling.co.il/en/investor-relations/unsubscribe" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.
 					</div>
 							  </td>
 							</tr>
@@ -334,7 +334,7 @@ EOT;
         
         #Send Mail
         $res[$i] = $objArr[$i]->sendMessage($domain, array(
-        'from'    => 'postmaster@irwebsites.co.il',
+        'from'    => 'delekdrilling@irwebsites.co.il',
         'to'      =>  $email,
         'subject' => 'Delek Drilling: Registration Complete',
         'html'    => $htmlBodyPosts1

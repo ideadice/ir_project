@@ -25,27 +25,25 @@
 
 <!-- CSS Stylesheets -->
 <link rel="stylesheet" type="text/css" href="../css/project.css" />
-<link rel="stylesheet" type="text/css" href="../css/bootstrap-rtl.min.css" />
-<link rel="stylesheet" type="text/css" href="../css/awesome-bootstrap-checkbox-rtl.css" />
+<link rel="stylesheet" type="text/css" href="../css/awesome-bootstrap-checkbox.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
 
-@import url(https://fonts.googleapis.com/earlyaccess/opensanshebrew.css);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
         .dice-main{
-            direction:rtl;
             width: 100%;
             max-width: 100%;
             border:4px solid f4f4f4; 
             padding:0px;
-            font-family: 'Open Sans Hebrew', serif;
+            font-family: 'Open Sans', sans-serif;
         }
         .dice-main h2{
-            padding-right:10px;
+            padding-left:10px;
             font-size:18px;
             padding-top:5px;
             padding-bottom:5px;
-            font-family: 'Open Sans Hebrew', serif;
+            font-family: 'Open Sans', sans-serif;
         }
         .form-group{
             width:100%;  
@@ -56,20 +54,20 @@
             margin-left: 0 !important;
         }
         .dice-checkbox-parent{
-            padding-right:30px;   
+            padding-left:30px;   
         }
         .dice-checkbox-child{
-            padding-right:50px;          
+            padding-left:50px;          
         }
         .dice-checkbox{
-            padding-right:30px;            
+            padding-left:30px;            
         }
         .dice-control{
             margin-top:0px; 
-            padding-right:30px;    
+            padding-left:30px;    
         }
         .dice-control-inside{
-            padding-right:30px;    
+            padding-left:30px;    
         }
 
         .col-sm-2 {
@@ -85,7 +83,7 @@
             width:400px;
         }
         .dice-btn{
-            margin-right:10px;
+            margin-left:10px;
             margin-top:20px;
             padding:8px 30px 8px 30px;
             font-size:16px;
@@ -94,57 +92,35 @@
         }
         .input-group{
             width: 400px; 
-            margin-right: 10px; !important; 
+            margin-left: 10px; !important; 
         }
         .dice-required-area{
-          margin-right: 10px; !important;   
+          margin-left: 10px; !important;   
         }
         .checkbox label, .radio label {
-            padding-right: 5px!important;
+            padding-left: 5px!important;
              outline:0!important;
         }
         *:focus {
             outline: none!important;
         }
         .dice-percent-box{
-         margin-right:10px; 
+         margin-left:10px; 
             width: 150px!important;  
         }
         .dice-percent-text{
-         margin-right:10px;
+         margin-left:10px;
             margin-top:5px;   
         }
         .dice-checkbox-second{
-         margin-right:30px;   
-        }
-        .dice-en-text{
-            text-align:left;
-            direction:ltr!imortant;
-        }
-        .dice-en-text::placeholder{
-           text-align:right;
-            direction:rtl!imortant;
-        }
-        .form-control-feedback{
-            right: auto!important;
-            left:0; 
-            margin-left:-40px!important; 
-        }
-        .input-group-addon:first-child{
-            border-top-right-radius: 4px !important;
-            border-bottom-right-radius: 4px !important;
-        }
-
-        .input-group-addon:first-child {
-            border-left: 0;
-            border-right: 1px solid #ccc !important;
+         margin-left:30px;   
         }
 @media (max-width: 768px) {
         .dice-main{
             padding:20px;
         }
         .dice-main h2{
-            padding-right:0;
+            padding-left:0;
             text-align:center;
             font-size:20px;
         }
@@ -155,13 +131,13 @@
             width:100%;
         }
         .dice-checkbox-parent{
-            padding-right:20px;           
+            padding-left:20px;           
         }
         .dice-checkbox-child{
-            padding-right:30px; 
+            padding-left:30px; 
         }
         .dice-checkbox{
-            padding-right:20px;          
+            padding-left:20px;          
         }
         .col-lg-2 {
             width: 30%;
@@ -184,17 +160,13 @@
             margin-right: 5px; !important;  
         }
         .dice-required-area{
-            margin-right: 5px; !important; 
+            margin-left: 5px; !important; 
         }        
-              .form-control-feedback{
-            right: 0!important;
-            
-margin-right:50px!important; 
-        }
+      
         
 }
     </style>
-<title>הרשמה למערכת התראות</title>
+<title>Registration Page</title>
 
 
 </head>
@@ -205,62 +177,63 @@ margin-right:50px!important;
 <div class="covercls" ng-controller="registration">
 
 <div class="container dice-main">
- <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i>   פרטים כלליים</h2>
+ <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i>   Fill Details</h2>
 
     <form class="form-horizontal" name="myForm"   action="registrationInsert.php" method="post">
 <!--Email-->
         <div class="input-group margin-bottom-sm">
           <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-             <input type="email" class="form-control dice-en-text" id="email"  onkeyup="showHint(this.value)" placeholder="*הכנס דואר אלקטרוני" name="email" ng-model="email" required>
-                <span class="glyphicon glyphicon-remove form-control-feedback" style="z-index: 1000;color:#f39c12;" ng-show="myForm.email.$dirty && myForm.email.$invalid"></span>
-                <span class="glyphicon glyphicon-ok form-control-feedback" style="z-index: 1000;color:green;" ng-show="myForm.email.$dirty &&  myForm.email.$valid"></span>
+             <input type="email" class="form-control" id="email"  onkeyup="showHint(this.value)" placeholder="Enter email*" name="email" ng-model="email" required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" style="z-index: 1000;margin-right:4%;color:#f39c12;" ng-show="myForm.email.$dirty && myForm.email.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" style="z-index: 1000;margin-right:4%;color:green;" ng-show="myForm.email.$dirty &&  myForm.email.$valid"></span>
         </div>
         <div class="dice-required-area">
             <p id="txtHint" style="color:red"></p>
-            <p id="requiredName"  ng-show="myForm.email.$dirty && myForm.email.$invalid" style="color:#f39c12" >דואר אלקטרוני לא תקין</p>
-            <p id="requiredName"  ng-show="!myForm.email.$dirty && myForm.email.$touched" style="color:red" >דואר אלקטרוני הוא שדה חובה.</p>      
+            <p id="requiredName"  ng-show="myForm.email.$dirty && myForm.email.$invalid" style="color:#f39c12" >Invalid Email Format</p>
+            <p id="requiredName"  ng-show="!myForm.email.$dirty && myForm.email.$touched" style="color:red" >Email is required.</p>      
         </div>
         
 <!--First Name-->     
         <div class="input-group margin-bottom-sm">
           <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-        <input type="text" class="form-control dice-en-text" id="inp1" placeholder="הכנס שם פרטי (אנגלית)*"  name="inp1" ng-model="inp1"  ng-pattern="/^[a-zA-Z]+$/"; required>
-                <span class="glyphicon glyphicon-remove form-control-feedback" style="color:#f39c12;" ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid"></span>
-                <span class="glyphicon glyphicon-ok form-control-feedback" style="color:green;" ng-show="myForm.inp1.$dirty &&  myForm.inp1.$valid"></span>
+        <input type="text" class="form-control" id="inp1" placeholder="Enter First Name*"  name="inp1" ng-model="inp1"  ng-pattern="/^[a-zA-Z]+$/"; required>
+                <span class="glyphicon glyphicon-remove form-control-feedback" style="margin-right:4%;color:#f39c12;" ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid"></span>
+                <span class="glyphicon glyphicon-ok form-control-feedback" style="margin-right:4%;color:green;" ng-show="myForm.inp1.$dirty &&  myForm.inp1.$valid"></span>
                <!--<h1>{{myForm.vld.$valid}}</h1>-->
         </div>
         <div class="dice-required-area">
                 <p></p>
-                <p id="requiredName"  ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid" style="color:#f39c12" > שם פרטי חייב להיות רק אותיות באנגלית</p>
-                <p id="requiredName"  ng-show="!myForm.inp1.$dirty && myForm.inp1.$touched" style="color:red" >שם פרטי הוא שדה חובה.</p>    
+                <p id="requiredName"  ng-show="myForm.inp1.$dirty && myForm.inp1.$invalid" style="color:#f39c12" >First Name must be english letters only</p>
+                <p id="requiredName"  ng-show="!myForm.inp1.$dirty && myForm.inp1.$touched" style="color:red" >First Name is required.</p>    
         </div>    
         
 <!--Last Name-->     
         <div class="input-group margin-bottom-sm">
           <span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
-        <input type="text" class="form-control dice-en-text" id="pName2" placeholder="הכנס שם משפחה (אנגלית)*" name="pName2" ng-model="pName2"    ng-pattern="/^[a-zA-Z]+$/"; required  > 
-        <span class="glyphicon glyphicon-remove form-control-feedback" style="color:#f39c12;" ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid"></span>
-        <span class="glyphicon glyphicon-ok form-control-feedback" style="color:green;" ng-show="myForm.pName2.$dirty && myForm.pName2.$valid" ></span>
+        <input type="text" class="form-control" id="pName2" placeholder="Enter Last Name*" name="pName2" ng-model="pName2"    ng-pattern="/^[a-zA-Z]+$/"; required  > 
+        <span class="glyphicon glyphicon-remove form-control-feedback" style="margin-right:4%;color:#f39c12;" ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid"></span>
+        <span class="glyphicon glyphicon-ok form-control-feedback" style="margin-right:4%;color:green;" ng-show="myForm.pName2.$dirty && myForm.pName2.$valid" ></span>
         </div>
         <div class="dice-required-area">
                 <p></p>
-                <p id="requiredName"  ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid" style="color:#f39c12" >שם משפחה חייב להיות רק אותיות באנגלית</p>
-                <p id="requiredName"  ng-show="!myForm.pName2.$dirty && myForm.pName2.$touched" style="color:red" >שם משפחה הוא שדה חובה.</p>   
+                <p id="requiredName"  ng-show="myForm.pName2.$dirty && myForm.pName2.$invalid" style="color:#f39c12" >Last Name must be english letters only</p>
+                <p id="requiredName"  ng-show="!myForm.pName2.$dirty && myForm.pName2.$touched" style="color:red" >Last Name is required.</p>   
         </div>          
 
 <!--Company-->     
         <div class="input-group margin-bottom-sm">
           <span class="input-group-addon"><i class="fa fa-address-card-o"></i></span>
-   <input type="text" class="form-control dice-en-text" id="cName" placeholder="הכנס חברה (אנגלית)*" name="cName" ng-model="cName">
+   <input type="text" class="form-control" id="cName" placeholder="Enter Company*" name="cName" ng-model="cName"  >
+
         </div>
         <div class="dice-required-area">
                 <p></p>
-        <p id="requiredName"  ng-show="!myForm.cName.$dirty && myForm.cName.$touched" style="color:red" >שדה חברה הוא שדה חובה.</p>    
+        <p id="requiredName"  ng-show="!myForm.cName.$dirty && myForm.cName.$touched" style="color:red" >Company is required.</p>    
         </div>  
 
 <!--Country-->     
         <div class="input-group margin-bottom-sm">
-          <span class="input-group-addon dice-en-text"><i class="fa fa-globe"></i></span>
+          <span class="input-group-addon"><i class="fa fa-globe"></i></span>
               <select class="form-control" id="sel1" name="sel1" ></select> 
         </div>
         <div class="dice-required-area">
@@ -268,13 +241,13 @@ margin-right:50px!important;
         </div>  
    
    
-       <h2><i class="fa fa-line-chart" aria-hidden="true"></i>   עדכוני מניה</h2>
+       <h2><i class="fa fa-line-chart" aria-hidden="true"></i>   Stock Information</h2>
 
 <!--Daily Summary Of Stock Price-->
       <div class="checkbox checkbox-primary dice-checkbox">
         <input type="checkbox" value="" id="dailySummaryStock" name="dailySummaryStock">
         <label for="dailySummaryStock">
-            עדכון יומי על מחיר המניה
+            Daily Summary Of Stock Price
         </label>
       </div>
         
@@ -282,7 +255,7 @@ margin-right:50px!important;
       <div class="checkbox checkbox-primary dice-checkbox">
         <input type="checkbox" value="" id="weeklySummaryStock" name="weeklySummaryStock">
         <label for="weeklySummaryStock">
-            סיכום שבועי של מחיר המניה
+            Weekly Summary Of Stock Price
         </label>
       </div>
 
@@ -290,14 +263,14 @@ margin-right:50px!important;
       <div class="checkbox checkbox-primary dice-checkbox">
         <input type="checkbox" value=""  id="stockThresholdAlert"  name="stockThresholdAlert" ng-model="stockThresholdAlert">
         <label for="stockThresholdAlert">
-            עידכון על שינוי מחיר המניה
+            Stock Threshold Alert
         </label>
       </div>
                                             
 <!--Above And Below Control-->                                                
-  <label class="control-label dice-control"><i class="fa fa-percent" aria-hidden="true"></i>  מעל או מתחת:</label>
+  <label class="control-label dice-control"><i class="fa fa-percent" aria-hidden="true"></i>  Above And Below:</label>
    	<div class="row" >
-  <div class="dice-control-inside">
+  <div class="col-lg-10 dice-control-inside">
     <div class="input-group dice-percent-box">
       <span class="input-group-btn">
         <button class="btn btn-default" type="button" id="btn-plus"  onclick="minusFunction()"  ng-disabled="!stockThresholdAlert" ><span class="glyphicon glyphicon-minus" ></span></button>
@@ -307,26 +280,26 @@ margin-right:50px!important;
         <button class="btn btn-default" type="button" id="btn-minus"  onclick="plusFunction()" ng-disabled="!stockThresholdAlert"><span class="glyphicon glyphicon-plus" ></span></button>
       </span>
     </div>
-    <p class="dice-percent-text" id="requiredName"  ng-show="stockThresholdAlert" style="color:red;" >הכנס אחוז</p> 
+    <p class="dice-percent-text" id="requiredName"  ng-show="stockThresholdAlert" style="color:red;" >Enter Percent</p> 
   </div>
 </div> 
    
 <!-- Start New Fill -->
-    <h2><i class="fa fa-rss" aria-hidden="true"></i>   חדשות</h2>
-        
+    <h2><i class="fa fa-rss" aria-hidden="true"></i>   News</h2>
 
 <!--Immediate Reports-->
       <div class="checkbox checkbox-primary dice-checkbox-second">
           <input type="checkbox" value="" id="immediateCheck" name="immediateCheck" ng-checked="all">
         <label for="immediateCheck">
-            עדכוני חדשות
+            Immediate Reports
         </label>
       </div>
 
 
+
     <!-- END New Fill -->
 
-     <button type="submit" class="btn btn-default dice-btn" name="submit"  ng-disabled="myForm.$invalid"  >הרשמה</button>
+     <button type="submit" class="btn btn-default dice-btn" name="submit"  ng-disabled="myForm.$invalid"  >Submit</button>
     
      
     

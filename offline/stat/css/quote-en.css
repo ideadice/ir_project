@@ -1,0 +1,110 @@
+body {
+  background-color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h1 { 
+    display: block;
+    font-size: 35px;
+    font-weight: 500;
+    font-family: sans-serif;
+    padding:0;
+    margin: 7px 0 7px 0;
+    text-align:left;
+}
+h2 { 
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    font-family: sans-serif;
+    padding:0;
+    margin: 7px 0 7px 0;
+    text-align:left;
+}
+.head-price { 
+    font-size: 23px;
+    font-weight: 500;
+    font-family: sans-serif;
+    padding:0;
+    margin: 0 10px 0 0px;
+    text-align:left;
+}
+.price{
+    font-size: 23px;
+    font-weight: 200;
+    font-family: sans-serif;
+    padding:0;
+    margin: 0 15px 0 2px;
+    text-align:left; 
+}
+.container {
+  display: grid;
+  width: 1200px;
+      grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 163px);
+  grid-gap: 1rem;
+}
+.item1{
+   grid-column-start: 1;
+  grid-column-end: 4;
+  padding:20px!important;
+  color: rgba(38,59,80,1);
+  border-radius: 0px;
+  border: 1px solid rgba(38,59,80,0.40)!important;
+}
+.item {
+  background-color: #fff;
+padding:0px;
+  color: rgba(38,59,80,1);
+  border-radius: 0px;
+  border: 1px solid rgba(38,59,80,0.25);
+}
+.val-table{ 
+  width:100%;
+  direction:ltr;
+}  
+dl{
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;    
+  letter-spacing:-0.31em;
+  *letter-spacing:normal;
+  word-spacing:-0.43em;
+  background-color: #fff;
+  font-family: sans-serif;
+    
+}
+dl dt,
+dl dd {
+  display:inline-block;
+  *display:inline;
+  zoom:1;
+  letter-spacing:normal;
+  word-spacing:normal;
+  vertical-align:middle;
+  margin:0;
+  line-height: 26px;
+}
+dl dt{
+  font-weight:600;
+  font-size:14px;
+  width:60%;
+  padding: 0 0 0 2%;
+  border-bottom: 1px solid #cfcfcf;
+  background-color: #f7f7f7;
+}
+dl dt:hover{
+  border-bottom: 1px solid #cfcfcf;
+  background-color: #e4e3e3;
+    margin-right:-5px;
+  transition: all 0.2s;
+}
+dl dd{ 
+  font-size:14px;
+  margin-right:-1px;
+  width:36%;
+  padding: 0 0 0 4%;
+  border-bottom: 1px solid #cfcfcf;
+}   
+

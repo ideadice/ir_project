@@ -4,14 +4,10 @@
 include "/code/mysql/database.php";
 
 
-
-
 #Use mailgun library installed on server
 require '/var/www/html/mailgun-php/vendor/autoload.php';
 use Mailgun\Mailgun;
 $domain = "irwebsites.co.il";
-
-
 
 
 // Create connection
@@ -22,48 +18,33 @@ if ($conn->connect_error) {
 }
 
 
-
-// get the q parameter from URL
-//$q = $_REQUEST["q"];
 $email = htmlentities($_POST['email']);
-//echo "email is:".$q;
-//echo "email is:".$email;
+$email=htmlspecialchars(strip_tags($email));
+// sanitize email
+$email=filter_var($email,FILTER_SANITIZE_EMAIL);
 
+$queryDetails="select emailID,privateName,lastName from users where emailID=?";
 
+$stat=$conn->prepare($queryDetails);
+$stat->bind_param("s",$email);
+$stat->execute();
+$stat->bind_result($emailID,$privateName,$lastName);
+$stat->fetch();
+$userName=$lastName." ".$privateName;
+if($emailID<>''){
+	
+$query = "delete from users where emailID=?";
+$stat->close();
+// prepare query 
+$stmt = $conn->prepare($query);
+// bind values
+$stmt->bind_param("s",$email);
 
-
-//$email=$q;
-
-//$sqlCheck="select emailID from users where emailID='".$email."'";
-$sqlCheck="select emailID,privateName,lastName from users where emailID='".$email."'";
-
-$result = $conn->query($sqlCheck);
-$flag=0;//checks if the emailID already exists.
-
-//if the emailID exist flag=1,else flag=0.
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()){
-        $Pname=$row["privateName"];
-        $Lname= $row["lastName"];
-        if($email==$row['emailID']){
-            $flag=1;
-        }
-    }
-}
-
-
-
-
-if($flag==1){
+	if(!filter_var($email,FILTER_VALIDATE_EMAIL)===false){
     
-    $sql="delete from users where emailID='".$email."'";
     
-    if ($conn->query($sql)=== TRUE) {
+    if ($stmt->execute()===TRUE) {
         $i=0; 
-        
-        #Receiver full name for email content
-        //$userName=" " . $row["lastName"] . " " . $row["privateName"] ;
-        $userName=" " . $Lname . " " . $Pname ;
         
         $htmlBodyPosts1=<<<EOT
         
@@ -285,10 +266,7 @@ EOT;
         $i++; 
         
         //success deletee
-        @header("location:Unsubscribe-success.html");
-
-        
-        
+				@header("location:Unsubscribe-success.html");         
         //echo '<div class="alert alert-success" style="color:green;margin-left:40%;"> <strong>Delete Email Success!</strong></div>';
         
     }
@@ -300,8 +278,10 @@ EOT;
     
     
 }
+}
 else { //email don't exist}
-    @header("location:email-doesnt-exist.html");
+		@header("location:email-doesnt-exist.html");
+
     //echo '<div class="alert alert-success" style="color:red;margin-left:40%;"> <strong>Email Doesnt Exist!</strong></div>';
     
     

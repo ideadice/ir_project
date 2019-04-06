@@ -132,7 +132,7 @@ curl_exec($ch);*/
     
     
     
-            $jsonPresentation=file_get_contents('http://ais.ideadice.co.il/dev/ais/ais/TradeOneAPI2.php');
+            $jsonPresentation=file_get_contents('http://irwebsites.co.il/Investor_Relations/pages/gto/login.php');
             
             
             $json_data_presentation=json_decode($jsonPresentation,true);
@@ -142,11 +142,11 @@ curl_exec($ch);*/
             echo "<br/>Session Key : ".$json_data_presentation["Login"]["SessionKey"];*/
             
             
-            
+          
             
             $curl = curl_init();
             
-            curl_setopt_array($curl, array(
+            /*curl_setopt_array($curl, array(
                 CURLOPT_PORT => "9005",
                 CURLOPT_URL => "https://api.gto.co.il:9005/v2/json/market/tns/chart?key=142",
                 CURLOPT_RETURNTRANSFER => true,
@@ -161,7 +161,28 @@ curl_exec($ch);*/
                     "Content-Type: application/json",             
                     "session: ".$json_data_presentation["Login"]["SessionKey"]
                 ),
-            ));
+            ));*/
+            
+           // "https://api.gto.co.il:9005/v2/xml/market/table/simple?securities=475020&fields=BaseRate,BaseRateChange,TradingStage,HebName,LastDealRate,WeekYield,YesterdayYield,AllMonthYield,BeginOfYearYield,MinusOneYearYield,DailyHighestRate,DailyLowestRate,DailyTurnover",
+           
+            /*index call*/
+            
+            curl_setopt_array($curl, array(
+             CURLOPT_PORT => "9005",
+             CURLOPT_URL => "https://api.gto.co.il:9005/v2/json/market/securities?keys=475020",
+             CURLOPT_RETURNTRANSFER => true,
+             CURLOPT_ENCODING => "",
+             CURLOPT_MAXREDIRS => 10,
+             CURLOPT_TIMEOUT => 30,
+             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+             CURLOPT_CUSTOMREQUEST => "GET",
+             //CURLOPT_POSTFIELDS => "{\n\t\"Login\": {\n\t\t\n\t\t\"User\":\"apizvi01\",\n\t\t\"Password\":\"12345\"\n\t\n\t}\n}",
+             CURLOPT_HTTPHEADER => array(
+             "Cache-Control: no-cache",
+             "Content-Type: application/json",
+             "session: ".$json_data_presentation["Login"]["SessionKey"]
+             ),
+             ));
             
             $response = curl_exec($curl);
             $err = curl_error($curl);
@@ -175,8 +196,10 @@ curl_exec($ch);*/
             }
             
             $jsonPresentationtr=file_get_contents($curl);                                 
-            $json_data_presentationet=json_decode($jsonPresentationtr,true);
+            $json_data_presentationetTT=json_decode($jsonPresentationtr,true);
             $lengthPresentationJSONR = sizeof($json_data_presentationtr);
+            
+            echo $json_data_presentationetTT["Securities"]["Security"]["Symbol"];
     
            /* echo "<br/>the presentation length is: ".$lengthPresentationJSON;
             echo "<br/> Key : ".$json_data_presentationt["Tns"]["-Key"];

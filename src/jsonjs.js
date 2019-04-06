@@ -18,30 +18,22 @@ var previousclose;
 
 function getNewData() {
 
-var settings = {
-		  "async": true,
-		  "crossDomain": true,
-		  "url": "https://api.gto.co.il:9005/V2/json/login",
-		  "method": "POST",
-		  "headers": {
-		    "Content-Type": "application/json",
-		    "Cache-Control": "no-cache"
-		  },
-		  "processData": false,
-		  "data": "{\n\t\"Login\": {\n\t\t\n\t\t\"User\":\"apizvi01\",\n\t\t\"Password\":\"12345\"\n\t\n\t}\n}"
-		}
-
-
-	document.getElementById("test0011").innerHTML = "before ajax";
-	
-	
-	$.ajax(settings).done(function (response) {
-		  console.log(response);
-		});
+	var settings = {
+			 "async": true,
+			 "crossDomain": true,
+			 "url": "https://api.gto.co.il:9005/V2/json/login",
+			 "method": "POST",
+			 "headers": {
+			   "Content-Type": "application/json",
+			   "Cache-Control": "no-cache"
+			 },
+			 "processData": false,
+			 "data": "{\n\t\"Login\": {\n\t\t\n\t\t\"User\":\"apizvi01\",\n\t\t\"Password\":\"12345\"\n\t\n\t}\n}"
+			}$.ajax(settings).done(function (response) {
+				console.log(response);
+			});
 
 	document.getElementById("test0012").innerHTML = "Finished ajax";
-	
-	
 }
 
 
